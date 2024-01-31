@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;600&family=Syne:wght@400;500;600;700&display=swap');
+
 @import "./abstracts/mixins", "./abstracts/variables";
 
-@import "./base/reset", "./base/base";
+@import "./base/reset", "./base/base", "./base/utilities.scss";
 
 @import "./components/component";
 

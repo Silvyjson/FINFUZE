@@ -1,0 +1,55 @@
+.about{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5rem;
+    width: 100%;
+}
+
+.switch-positions{
+    flex-direction: row-reverse;
+}
+
+.desc{
+    flex-basis: 50%;
+    font-size: 5rem;
+    font-family: $syne;
+    &-span{
+        color: $bluecolor;
+    }
+    &-text{
+        font-size: 4rem;
+    }
+}
+
+.image{
+    background-color: $bluecolor;
+    height: 60rem;
+    padding: 3rem 3rem 0rem 3rem;
+    flex-basis: 35%;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+// .trial{
+//     height: 40%;
+//     display: flex;
+//     align-items: flex-end;
+//     justify-content: center;
+// }
+
+.person-img{
+    width: 100%;
+    height: 70%;
+    // object-fit: contain;
+    aspect-ratio: 1/1;
+}
