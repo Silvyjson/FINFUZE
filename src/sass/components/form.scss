@@ -1,28 +1,41 @@
+.inputFormStyle {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+}
+
 .InputStle {
   position: relative;
-  width: 400px;
+  width: 380px;
   height: 45px;
+  padding: 0 20px;
   border-radius: 10px;
   border: 1px solid #d7d7d7;
 }
 
 .InputStle::placeholder {
-  font-size: 16px;
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 19px;
   letter-spacing: -0.03em;
   text-align: left;
   color: #d7d7d7;
-  position: absolute;
-  left: 50px;
 }
 
 .buttonStyle {
-  width: 405px;
+  cursor: pointer;
+  width: 420px;
   height: 50px;
   border-radius: 10px;
   background-color: $primary-color;
   border: 1px solid $primary-color;
+  color: $page-background-color;
 }
 
 .newletter-section {
@@ -40,8 +53,8 @@
 
   p {
     width: 50%;
-    font-size: 2.5rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 500;
     line-height: 3rem;
     letter-spacing: -0.03em;
     text-align: center;
@@ -58,10 +71,21 @@
   div {
     position: relative;
   }
+
+  input {
+    width: 320px;
+    padding: 0 45px;
+  }
 }
 
 .mail-logo {
   position: absolute;
   left: 10px;
   top: 13px;
+}
+
+.newsletterStyle::placeholder {
+  position: absolute;
+  top: 15px;
+  left: 45px;
 }

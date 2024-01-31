@@ -1,34 +1,15 @@
-import React, {useRef} from "react";
-import HeaderButton from "./form";
-
-function Menubar() {
-  const menuIconRef = useRef(null);
-
-  function toggleList() {
-    const navElements = document.querySelectorAll(`.navElement`);
-
-    menuIconRef.current?.classList.toggle("open");
-
-    navElements.forEach((navElement) => {
-      navElement.classList.toggle("open_nav");
-    });
-  }
-
-  return (
-    <div className="menu-icon" onClick={toggleList} ref={menuIconRef}>
-      <div></div>
-      <div></div>
-    </div>
-  );
-}
+import React from "react";
+import HeaderButton from "../Other-component/form";
+import Navigation, { Menubar } from "../Other-component/Navigation";
 
 function Header() {
+
   return (
     <section className="header_section">
       <span>
         <nav className="header_nav-section">
           <img src="./image/Finfuze logo 2 1.png" alt="logo" />
-          
+
           <ul className="navElement">
             <li>Home</li>
             <li>Manage</li>
@@ -36,12 +17,12 @@ function Header() {
             <li>About</li>
             <li>Contact</li>
           </ul>
-          
+
           <ul className="navElement navlist">
-            <li>Login</li>
-            <li>Sign Up</li>
+            <li><Navigation label="Login " nav="/login-page" /></li>
+            <li><Navigation label="Sign Up" nav="/signUp-page" /></li>
           </ul>
-          
+
           <Menubar />
         </nav>
 
@@ -55,13 +36,13 @@ function Header() {
               Unlock Financial Freedom with FinFuze: Seamlessly Manage, Learn,
               and Save!
             </p>
-            
+
             <div className="button">
               <HeaderButton label="Get started" />
               <HeaderButton label="Learn more" className="h2button" />
             </div>
           </div>
-          
+
           <div className="cube-img">
             <img src="./image/cube 3.png" alt="cube" />
           </div>

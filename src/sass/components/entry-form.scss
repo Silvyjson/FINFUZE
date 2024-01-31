@@ -1,0 +1,80 @@
+.entryForm-section {
+  img {
+    width: 200px;
+    height: 90px;
+  }
+}
+
+.entryForm-container {
+  @include display-style();
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    letter-spacing: 0em;
+    margin: 0;
+  }
+
+  p {
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: 0em;
+  }
+
+  span {
+    display: inline-flex;
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: 0em;
+    margin-top: 20px;
+  }
+}
+
+.entryFormButton {
+  margin-top: 20px;
+}
+
+.entry-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.naviPropstyle {
+  @include display-style();
+  cursor: pointer;
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.password-container {
+  position: relative;
+
+  img {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
+
+.formAdditional-info {
+  @include display-style();
+  justify-content: space-between;
+
+  input {
+    border: 1px solid #d7d7d7;
+    cursor: pointer;
+  }
+
+  span {
+    cursor: pointer;
+  }
+}
