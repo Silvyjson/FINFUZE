@@ -5,13 +5,21 @@ export function Menubar() {
   const menuIconRef = useRef(null);
 
   function toggleList() {
-    const navElements = document.querySelectorAll(`.navElement`);
+    // const navElement = document.querySelector(`.navElement`);
 
+    // menuIconRef.current?.classList.toggle("open");
+    // navElement.classList.toggle("open_nav");
+
+    const navElements = document.querySelectorAll(`.navElement`);
+    
+    // Toggle class on the menu icon
     menuIconRef.current?.classList.toggle("open");
 
-    navElements.forEach((navElement) => {
+    // Toggle class on each navElement
+    navElements.forEach(navElement => {
       navElement.classList.toggle("open_nav");
     });
+    
   }
 
   return (
@@ -24,7 +32,7 @@ export function Menubar() {
 }
 
 const Navigation = (props) => {
-  const { label, nav, src, className} = props;
+  const { label, nav, src, className } = props;
 
   const navigate = useNavigate();
 
@@ -33,7 +41,7 @@ const Navigation = (props) => {
   }
 
   return (
-    <div onClick={toggleNext} className={className}>{label}<img src={src}/></div>
+    <div onClick={toggleNext} className={className}>{label}<img src={src} /></div>
   );
 }
 

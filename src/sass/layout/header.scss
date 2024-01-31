@@ -9,16 +9,16 @@
 .header_nav-section {
   @include display-style();
   justify-content: space-around;
+}
 
-  ul {
-    @include display-style();
-    gap: 20px;
-    list-style-type: none;
-    font-size: 1.8rem;
-    font-weight: 400;
-    line-height: 2.5rem;
-    cursor: pointer;
-  }
+.navElement {
+  @include display-style();
+  gap: 20px;
+  list-style-type: none;
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 2.5rem;
+  cursor: pointer;
 }
 
 .navlist :nth-child(2) {
