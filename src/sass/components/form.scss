@@ -1,14 +1,67 @@
 .InputStle {
+  position: relative;
   width: 400px;
-  height: 50px;
+  height: 45px;
   border-radius: 10px;
   border: 1px solid #d7d7d7;
 }
 
+.InputStle::placeholder {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+  text-align: left;
+  color: #d7d7d7;
+  position: absolute;
+  left: 50px;
+}
+
 .buttonStyle {
-  width: 400px;
+  width: 405px;
   height: 50px;
   border-radius: 10px;
   background-color: $primary-color;
   border: 1px solid $primary-color;
+}
+
+.newletter-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 5rem;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    width: 50%;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 3rem;
+    letter-spacing: -0.03em;
+    text-align: center;
+  }
+}
+
+.nesletter-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  div {
+    position: relative;
+  }
+}
+
+.mail-logo {
+  position: absolute;
+  left: 10px;
+  top: 13px;
 }
