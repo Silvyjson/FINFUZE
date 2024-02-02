@@ -11,15 +11,14 @@ export function Menubar() {
     // navElement.classList.toggle("open_nav");
 
     const navElements = document.querySelectorAll(`.navElement`);
-    
+
     // Toggle class on the menu icon
     menuIconRef.current?.classList.toggle("open");
 
     // Toggle class on each navElement
-    navElements.forEach(navElement => {
+    navElements.forEach((navElement) => {
       navElement.classList.toggle("open_nav");
     });
-    
   }
 
   return (
@@ -38,11 +37,14 @@ const Navigation = (props) => {
 
   const toggleNext = () => {
     navigate(nav);
-  }
+  };
 
   return (
-    <div onClick={toggleNext} className={className}>{label}<img src={src} /></div>
+    <div onClick={toggleNext} className={className}>
+      {label}
+      <img src={src} alt={src} />
+    </div>
   );
-}
+};
 
 export default Navigation;

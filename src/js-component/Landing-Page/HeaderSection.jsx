@@ -1,14 +1,16 @@
 import React from "react";
 import HeaderButton from "../Other-component/form";
 import Navigation, { Menubar } from "../Other-component/Navigation";
+import { Link } from "react-router-dom";
 
 function Header() {
-
   return (
     <section className="header_section">
       <span>
         <nav className="header_nav-section">
-          <img src="./image/Finfuze logo 2 1.png" alt="logo" />
+          <Link to="/">
+            <img src="./image/Finfuze logo 2 1.png" alt="logo" />
+          </Link>
 
           <ul className="navElement">
             <li>Home</li>
@@ -19,8 +21,12 @@ function Header() {
           </ul>
 
           <ul className="navElement navlist">
-            <li><Navigation label="Login " nav="/login-page" /></li>
-            <li><Navigation label="Sign Up" nav="/signUp-page" /></li>
+            <li>
+              <Navigation label="Login " nav="/login" />
+            </li>
+            <li>
+              <Navigation label="Sign Up" nav="/signUp" />
+            </li>
           </ul>
 
           <Menubar />
