@@ -1,0 +1,11 @@
+//Mixin for size properties
+@mixin sizes($primary-width, $primary-height) {
+    width: $primary-width;
+    height: $primary-height;
+  }
+  
+  //Mixin for article prperties
+  @mixin display-style() {
+    display: flex;
+    align-items: center;
+  }

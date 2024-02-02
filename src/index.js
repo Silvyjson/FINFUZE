@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './sass/main.scss';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import './sass/main.scss';
+import LandingPage from './js-component/LandingPage';
+import LoginComponent from './js-component/LoginPage';
+import SignUpComponent from './js-component/SignUpPage';
+
+const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
+  { path: "/login-page", element: <LoginComponent /> },
+  { path: "/signUp-page", element: <SignUpComponent /> },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
