@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export const Input = (props) => {
-  const { placeholder, type, className, required, htmlFor, label } = props;
+  const { placeholder, type, className, required, htmlFor,label, id, name,value, onChange } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -11,11 +11,16 @@ export const Input = (props) => {
 
   return (
     <span className="inputFormStyle">
-      <label htmlFor={htmlFor}>{label}</label>
+      <label htmlFor={htmlFor} >{label}</label>
       <input type={type === "password" ? (isPasswordVisible ? "text" : "password") : type}
         placeholder={placeholder}
         className={`InputStle ${className}`}
-        required={required}
+        name={name}
+        id={id}
+        value={value}
+        onChange={onChange}
+        required
+        autoComplete="on"
       />
       <div className="password-container">
         {type === "password" && (
