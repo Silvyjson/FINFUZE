@@ -1,32 +1,53 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Button, Input } from "./Other-component/form";
 import Navigation from "./Other-component/Navigation";
+import AuthDetails from "./Other-component/AuthDetails";
 
 function SignUpComponent() {
 
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const signUpAuth = (e) => {
         e.preventDefault();
+        setLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential)
-            }).catch((error) => {
-                console.log(error)
+                return updateProfile(userCredential.user, {
+                    displayName: `${firstName} ${lastName}`
+                });
             })
-    }
+            .then(() => {
+                console.log("Account creation successful");
+            })
+            .catch((error) => {
+                console.error(error.code);
+                console.error(error.message);
+                if (error.code === "auth/email-already-in-use") {
+                    setError("Email is already in use. Please sign in.");
+                } else {
+                    setError("Account creation failed. Please try again.");
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
 
     return (
         <section className="entryForm-section">
-            <img src="./image/Finfuze logo 1 2.png" alt="logo" />
+            <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
             <div className="entryForm-container">
                 <h1>Welcome</h1>
                 <p>Create an account</p>
+                {error && <p className="error-message">{error}</p>}
                 <form onSubmit={signUpAuth} className="entry-form">
                     <Input
                         label="First name"
@@ -65,12 +86,14 @@ function SignUpComponent() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
-                        label="Create an account"
+                        label={loading ? "Creating Account..." : "Create an account"}
                         className="entryFormButton"
+                        disabled={loading}
                     />
                 </form>
                 <span>Already have an account? <Navigation label="Login " nav="/login-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" /></span>
             </div>
+            <AuthDetails />
         </section>
     );
 }

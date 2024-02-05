@@ -1,12 +1,13 @@
 import React from "react";
+import AuthDetails from "./Other-component/AuthDetails";
 
 function HomePage() {
-
-
+    
     return (
-        <section>
-            <h1>HomePage</h1>
-        </section>
+        <div style={{fontSize: '10px',textAlign: 'center'}}>
+            <h1>Welcome to the Home Page</h1>
+            <AuthDetails/>
+        </div>
     );
 }
 

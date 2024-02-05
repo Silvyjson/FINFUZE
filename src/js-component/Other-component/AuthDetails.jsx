@@ -1,49 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut } from "../../firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from 'react-router-dom';
-
 
 export const AuthDetails = () => {
     const [authUser, setAuthUser] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const userSignIn = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setAuthUser(user);
+                navigate('/home-page');
             } else {
                 setAuthUser(null);
             }
         });
 
         return () => {
-            unsubscribe();
+            userSignIn();
         };
-    }, []);
+    }, [navigate]);
 
     const userSignOut = () => {
-        signOut(authUser)
+        signOut(auth)
             .then(() => {
                 console.log("Sign out successful");
+                navigate("/login-page");
             })
             .catch((error) => console.log(error));
     };
 
-    const navigateToAnotherPage = () => {
-        navigate('/home-page');
-    };
-
     return (
-        <div>
+        <div style={{ fontSize: '20px', textAlign: 'center' }}>
             {authUser ? (
                 <>
-                    <p>{`signed in as ${authUser.email}`}</p>
+                    <p>{`Signed in as ${authUser.email}`}</p>
+                    <p>{`Welcome, ${authUser.displayName || '...'}`}</p>
                     <button onClick={userSignOut}>Sign out</button>
-                    <button onClick={navigateToAnotherPage}>Go to Another Page</button>
                 </>
             ) : (
-                <p>signed out</p>
+                null
             )}
         </div>
     );
