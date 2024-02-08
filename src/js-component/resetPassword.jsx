@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { AuthDetails } from "./Other-component/AuthDetails";
-import { Button, Input } from "./Other-component/form";
+import { useNavigate } from 'react-router-dom';
+import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
 
 function ResetPasswordComponent() {
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
+    const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const resetPasswordAuth = async (e) => {
@@ -19,22 +21,27 @@ function ResetPasswordComponent() {
         try {
             await sendPasswordResetEmail(auth, email);
             console.log("Password reset email sent successfully");
-            setError("An email has been sent to you.");
+            setMessage(`A password reset email has been sent to ${email}. Please check your inbox.`);
         } catch (error) {
             console.error(error.code);
             console.error(error.message);
-            
+
             setError("Error resetting password. Please try again.");
         } finally {
             setLoading(false);
         }
     };
 
+    const haddleNavigate = () => {
+        navigate("/login-page")
+    }
+
     return (
         <section className="entryForm-section">
             <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
             <div className="entryForm-container">
-                <h1>Reset Password</h1>
+                <h1>Forgot password?</h1>
+                {message && <p>{message}</p>}
                 {error && <p className="error-message">{error}</p>}
                 <form onSubmit={resetPasswordAuth} className="entry-form">
                     <Input
@@ -53,9 +60,8 @@ function ResetPasswordComponent() {
                         disabled={loading}
                     />
                 </form>
-                <span><Navigation label="Return to login page " nav="/login-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" /></span>
+                <span onClick={haddleNavigate} className="naviPropstyle"><img src="./image/arrow-left-02.png" alt="" />Back to login</span>
             </div>
-            <AuthDetails />
         </section>
     );
 }

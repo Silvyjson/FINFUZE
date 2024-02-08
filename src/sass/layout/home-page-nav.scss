@@ -1,0 +1,57 @@
+.homePageMenu_section {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  margin: 0 10%;
+  width: 30%;
+  height: 100%;
+  font-size: 2rem;
+  z-index: 2;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 2.5rem;
+    letter-spacing: -0.03em;
+    padding-left: 10%;
+    color: $primary-color;
+    margin: 0 0 20px;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.03em;
+  }
+}
+
+.homePageMenu_content {
+  @include display-style();
+  gap: 10px;
+  color: $gray-text-color;
+  cursor: pointer;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.notification-bell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  right: 70px;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
-import { AuthDetails } from "./Other-component/AuthDetails";
-import { Button, Input } from "./Other-component/form";
+import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
 
 function LoginComponent() {
@@ -18,9 +17,18 @@ function LoginComponent() {
         e.preventDefault();
         setError(null);
         setLoading(true);
+
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential);
+                const user = userCredential.user;
+
+                if (user && user.emailVerified) {
+                    console.log(userCredential);
+                    navigate("/profile-settings-page");
+                } else {
+                    setError("Email not verified. Please check your inbox for the verification email.");
+                    auth.signOut();
+                }
             })
             .catch((error) => {
                 console.error(error.code);
@@ -95,7 +103,6 @@ function LoginComponent() {
                 </form>
                 <span>Not registered yet? <Navigation label="Create an account" nav="/signUp-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" /></span>
             </div>
-            <AuthDetails />
         </section>
     );
 }

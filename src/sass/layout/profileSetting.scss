@@ -1,0 +1,54 @@
+.profileSettings {
+  padding-top: 50px;
+}
+
+.updateProfileButton {
+  cursor: pointer;
+  width: 20rem;
+  height: 40px;
+  padding: 8px, 16px, 8px, 16px;
+  border-radius: 8px;
+  border: none;
+  gap: 10px;
+  color: $page-background-color;
+  background-color: $primary-color;
+}
+
+.uploadImage-section {
+  display: flex;
+  gap: 15%;
+  .uploadImage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0em;
+    margin: 0;
+  }
+  span {
+    display: flex;
+    gap: 5px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0em;
+    color: $gray-text-color;
+    margin: 0;
+
+    div {
+      cursor: pointer;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}
+
+.updateProfileForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 30px;
+}

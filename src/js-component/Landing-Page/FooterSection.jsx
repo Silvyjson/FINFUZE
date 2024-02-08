@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input } from "../Other-component/form";
+import { Button, Input } from "../Other-component/Form";
 
 const FooterLinks = (props) => {
     const { title, links } = props;

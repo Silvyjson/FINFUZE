@@ -5,17 +5,11 @@ export function Menubar() {
   const menuIconRef = useRef(null);
 
   function toggleList() {
-    // const navElement = document.querySelector(`.navElement`);
-
-    // menuIconRef.current?.classList.toggle("open");
-    // navElement.classList.toggle("open_nav");
-
+   
     const navElements = document.querySelectorAll(`.navElement`);
     
-    // Toggle class on the menu icon
     menuIconRef.current?.classList.toggle("open");
 
-    // Toggle class on each navElement
     navElements.forEach(navElement => {
       navElement.classList.toggle("open_nav");
     });

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export const Input = (props) => {
-  const { placeholder, type, className, required, htmlFor,label, id, name,value, onChange } = props;
+  const { placeholder, type, className, htmlFor, label, id, name, value, onChange, disabled } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -20,6 +20,7 @@ export const Input = (props) => {
         value={value}
         onChange={onChange}
         required
+        disabled={disabled}
         autoComplete="on"
       />
       <div className="password-container">
@@ -36,10 +37,18 @@ export const Input = (props) => {
 }
 
 export const Button = (props) => {
-  const { label, className } = props;
+  const { label, className, onClick } = props;
 
   return (
-    <button type="submit" className={`buttonStyle ${className}`}>{label}</button>
+    <button type="submit" className={`buttonStyle ${className}`} onClick={onClick}>{label}</button>
+  );
+};
+
+export const UpdateProfileButton = (props) => {
+  const { label, className, onClick } = props;
+
+  return (
+    <button className={`updateProfileButton ${className}`} onClick={onClick}>{label}</button>
   );
 };
 
@@ -47,7 +56,7 @@ const HeaderButton = (props) => {
   const { label, className } = props;
 
   return (
-    <button className={`headerButton ${className}`}>{label}</button>
+    <button className={`headerButton ${className}`} >{label}</button>
   );
 };
 

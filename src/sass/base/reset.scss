@@ -27,6 +27,20 @@
   display: none;
 }
 
+.loading-spinner {
+  height: 100vh;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  color: $primary-color;
+}
+
+
 .error-message {
   color: red;
+  font-size: 2rem;
 }

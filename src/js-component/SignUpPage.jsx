@@ -1,45 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { Button, Input } from "./Other-component/form";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
-import AuthDetails from "./Other-component/AuthDetails";
 
 function SignUpComponent() {
-
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const signUpAuth = (e) => {
+    const signUpAuth = async (e) => {
         e.preventDefault();
         setLoading(true);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                return updateProfile(userCredential.user, {
-                    displayName: `${firstName} ${lastName}`
-                });
-            })
-            .then(() => {
-                console.log("Account creation successful");
-            })
-            .catch((error) => {
-                console.error(error.code);
-                console.error(error.message);
-                if (error.code === "auth/email-already-in-use") {
-                    setError("Email is already in use. Please sign in.");
-                } else {
-                    setError("Account creation failed. Please try again.");
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            console.log(userCredential);
+
+            await sendEmailVerification(auth.currentUser);
+            setMessage(`A verification email has been sent to ${email}. Please check your inbox.`);
+
+            setError(null);
+
+        } catch (error) {
+            console.error(error.code);
+            console.error(error.message);
+
+            setMessage(null);
+            if (error.code === "auth/email-already-in-use") {
+                setError("Email is already in use. Please sign in.");
+            } else {
+                setError("Account creation failed. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log("User is signed in");
+            } else {
+                console.log("User is signed out");
+            }
+        });
+    }, []);
 
     return (
         <section className="entryForm-section">
@@ -47,24 +56,9 @@ function SignUpComponent() {
             <div className="entryForm-container">
                 <h1>Welcome</h1>
                 <p>Create an account</p>
+                {message && <p>{message}</p>}
                 {error && <p className="error-message">{error}</p>}
                 <form onSubmit={signUpAuth} className="entry-form">
-                    <Input
-                        label="First name"
-                        htmlFor="firstName"
-                        id="firstName"
-                        type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                    <Input
-                        label="Last name"
-                        htmlFor="lastName"
-                        id="lastName"
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
                     <Input
                         label="Email"
                         htmlFor="email"
@@ -91,9 +85,11 @@ function SignUpComponent() {
                         disabled={loading}
                     />
                 </form>
-                <span>Already have an account? <Navigation label="Login " nav="/login-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" /></span>
+                <span>
+                    Already have an account?{" "}
+                    <Navigation label="Login " nav="/login-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" />
+                </span>
             </div>
-            <AuthDetails />
         </section>
     );
 }

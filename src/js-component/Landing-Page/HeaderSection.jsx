@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderButton from "../Other-component/form";
+import HeaderButton from "../Other-component/Form";
 import Navigation, { Menubar } from "../Other-component/Navigation";
 
 function Header() {
