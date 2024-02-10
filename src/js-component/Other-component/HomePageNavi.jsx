@@ -23,30 +23,32 @@ const HomePageNavItem = (props) => {
 function HomePageNav() {
     return (
         <section className="homePageMenu_section">
-            <h1>Finfuze.</h1>
-            <HomePageNavItem
-                title="Dashboard"
-                src="./image/menu-square.png"
-                selectedSrc="./image/menu-square1.png"
-                nav="/home-page"
-            />
-            <HomePageNavItem
-                title="Profile Update"
-                src="./image/user.png"
-                selectedSrc="./image/user1.png"
-                nav="/profile-settings-page"
-            />
-            <HomePageNavItem
-                title="Bank Information"
-                src="./image/bank.png"
-                selectedSrc="./image/bank1.png"
-                nav="/addBankInfoPage-page"
-            />
-            <HomePageNavItem
-                title="Financial literacy"
-                src="./image/book-04.png"
-                selectedSrc="./image/book-04.png"
-            />
+            <span>
+                <h1>Finfuze.</h1>
+                <HomePageNavItem
+                    title="Dashboard"
+                    src="./image/menu-square.png"
+                    selectedSrc="./image/menu-square1.png"
+                    nav="/home-page"
+                />
+                <HomePageNavItem
+                    title="Profile Update"
+                    src="./image/user.png"
+                    selectedSrc="./image/user1.png"
+                    nav="/profile-settings-page"
+                />
+                <HomePageNavItem
+                    title="Bank Information"
+                    src="./image/bank.png"
+                    selectedSrc="./image/bank1.png"
+                    nav="/addBankInfoPage-page"
+                />
+                <HomePageNavItem
+                    title="Financial literacy"
+                    src="./image/book-04.png"
+                    selectedSrc="./image/book-04.png"
+                />
+            </span>
         </section>
     );
 }

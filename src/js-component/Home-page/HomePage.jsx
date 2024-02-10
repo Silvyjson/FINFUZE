@@ -64,6 +64,7 @@ function HomePage() {
 
         if (user) {
             const { photoURL } = user;
+            console.log("Photo URL:", photoURL);
             setPhotoURL(photoURL || "./image/Ellipse 39.png");
         }
     }, [auth.currentUser]);
@@ -96,7 +97,7 @@ function HomePage() {
                                 title="Add Bank Information"
                                 src="./image/bank.png"
                                 explore="Add"
-                                nav=""
+                                nav="/addBankInfoPage-page"
                                 className="bank"
                             />
                             <HomePageQuickNav

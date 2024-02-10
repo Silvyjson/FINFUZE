@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
@@ -19,12 +20,18 @@ function LoginComponent() {
         setLoading(true);
 
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 const user = userCredential.user;
 
                 if (user && user.emailVerified) {
-                    console.log(userCredential);
-                    navigate("/profile-settings-page");
+                    const userDocRef = doc(getFirestore(), "users", user.uid);
+                    const userDocSnapshot = await getDoc(userDocRef);
+
+                    if (userDocSnapshot.exists()) {
+                        navigate("/home-page");
+                    } else {
+                        navigate("/profile-settings-page");
+                    }
                 } else {
                     setError("Email not verified. Please check your inbox for the verification email.");
                     auth.signOut();

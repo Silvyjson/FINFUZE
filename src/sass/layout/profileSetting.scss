@@ -1,17 +1,35 @@
 .profileSettings {
-  padding-top: 50px;
+  position: relative;
+  display: block;
+  margin: 50px 0 0 30%;
+  padding: 0 50px;
+  width: 60%;
 }
 
-.updateProfileButton {
-  cursor: pointer;
-  width: 20rem;
-  height: 40px;
-  padding: 8px, 16px, 8px, 16px;
-  border-radius: 8px;
-  border: none;
-  gap: 10px;
-  color: $page-background-color;
-  background-color: $primary-color;
+.userDataUploaded {
+  padding: 50px 0 50px 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  width: 100%;
+}
+
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  letter-spacing: -0.03em;
+  padding-left: 10%;
+  color: $primary-color;
+}
+
+.noLogo {
+  display: none;
 }
 
 .uploadImage-section {
@@ -51,4 +69,5 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   margin-top: 30px;
+  align-items: flex-end;
 }

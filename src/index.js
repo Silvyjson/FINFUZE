@@ -9,7 +9,8 @@ import SignUpComponent from './js-component/SignUpPage';
 import HomePage from './js-component/Home-page/HomePage';
 import ResetPasswordComponent from './js-component/ResetPassword';
 import ProfileSettings from './js-component/Home-page/ProfileSetting';
-import AddBankInfoPage from './js-component/Home-page/BankInformation';
+import AddBankInfoPage from './js-component/Home-page/BankDetails';
+import GetBankInfoForm from './js-component/Bank-info/BankInfoForm';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
   { path: "/home-page", element: <HomePage /> },
   { path: "/profile-settings-page", element: <ProfileSettings/> },
   { path: "/addBankInfoPage-page", element: <AddBankInfoPage /> },
-
+  { path: "/getBankInfoForm-page", element: <GetBankInfoForm /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

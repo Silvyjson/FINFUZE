@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Input, UpdateProfileButton } from "../Other-component/Form";
+import { HomePageButton, Input } from "../Other-component/Form";
 import HomePageNav, { NotificationBell } from "../Other-component/HomePageNavi";
 
 function ProfileSettings() {
+    const navigate = useNavigate();
 
     const auth = getAuth();
     const storage = getStorage();
@@ -23,6 +25,7 @@ function ProfileSettings() {
     const [loadingProfile, setLoadingProfile] = useState(true);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
+    const [userDataUploaded, setUserDataUploaded] = useState(false);
     const fileInputRef = useRef(null);
 
     const handleEditClick = () => {
@@ -50,22 +53,6 @@ function ProfileSettings() {
         setImageFile(null);
         setMessage("no file selected");
 
-        saveStateToLocalStorage();
-    };
-
-    useEffect(() => {
-        const savedState = localStorage.getItem("profileSettingsState");
-        if (savedState) {
-            const parsedState = JSON.parse(savedState);
-            setImageFile(parsedState.imageFile);
-        }
-    }, []);
-
-    const saveStateToLocalStorage = () => {
-        const stateToSave = {
-            imageFile,
-        };
-        localStorage.setItem("profileSettingsState", JSON.stringify(stateToSave));
     };
 
     const handleUpload = async () => {
@@ -73,20 +60,32 @@ function ProfileSettings() {
 
         try {
             if (imageFile || firstName.trim() !== "" || lastName.trim() !== "") {
+
+                if (!firstName.trim() ||
+                    !lastName.trim() ||
+                    !dateOfBirth.trim() ||
+                    !phoneNumber.trim() ||
+                    !address.trim()
+                ) {
+                    setError("All fields are required");
+                    return;
+                } else {
+                    setError("");
+                }
                 const updates = {};
 
                 if (imageFile) {
                     const storageRef = ref(storage, `profile_pictures/${auth.currentUser.uid}`);
                     await uploadBytes(storageRef, imageFile);
-                
+
                     const downloadURL = await getDownloadURL(storageRef);
-                
+
                     updates.photoURL = downloadURL;
                 } else {
                     const storageRef = ref(storage, `profile_pictures/${auth.currentUser.uid}`);
-                    
+
                     const existingImageRef = await getDownloadURL(storageRef).catch(() => null);
-                
+
                     if (existingImageRef) {
                         await deleteObject(storageRef);
                         updates.photoURL = "";
@@ -126,7 +125,8 @@ function ProfileSettings() {
                 });
 
                 setPhotoURL(updates.photoURL || photoURL);
-                saveStateToLocalStorage();
+                setUserDataUploaded(true);
+                navigate("/home-page");
             }
 
         } catch (error) {
@@ -153,6 +153,8 @@ function ProfileSettings() {
                             setDateOfBirth(userData.dateOfBirth || "");
                             setPhoneNumber(userData.phoneNumber || "");
                             setAddress(userData.address || "");
+
+                            setUserDataUploaded(true);
                         }
 
                         const { photoURL, email } = auth.currentUser;
@@ -181,93 +183,100 @@ function ProfileSettings() {
                 </div>
             ) : (
                 <section>
-                    <HomePageNav />
+                    {userDataUploaded && (
+                        <HomePageNav />
+                    )}
                     <NotificationBell />
-                    <div className="main_section profileSettings">
-                        <span className="uploadImage-section">
-                            <span className="uploadImage">
-                                <img src="./image/file upload states.png" />
-                                <div>
-                                    <h2>Upload your picture</h2>
-                                    <span>file format  Max. 5MB
-                                        {imageFile && (
-                                            <div onClick={handleDelete}>
-                                                <FontAwesomeIcon icon="fa-regular fa-circle-xmark" />
-                                            </div>
-                                        )}
-                                    </span>
-                                    {message && <p style={{ color: "red" }}>{message}</p>}
-                                </div>
+                    <h1 className={`logo ${userDataUploaded ? 'noLogo' : ''}`}>Finfuze.</h1>
+                    <div className={`profileSettings ${!userDataUploaded ? 'userDataUploaded' : ''}`}>
+                        <span>
+                            <span className="uploadImage-section">
+                                <span className="uploadImage">
+                                    <img src="./image/file upload states.png" />
+                                    <div>
+                                        <h2>Upload your picture</h2>
+                                        <span>file format  Max. 5MB
+                                            {imageFile && (
+                                                <div onClick={handleDelete}>
+                                                    <FontAwesomeIcon icon="fa-regular fa-circle-xmark" />
+                                                </div>
+                                            )}
+                                        </span>
+                                        {message && <p style={{ color: "red" }}>{message}</p>}
+                                    </div>
+                                </span>
+                                <HomePageButton
+                                    label="Upload"
+                                    onClick={handleEditClick}
+                                />
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: "none" }}
+                                    onChange={handleChange}
+                                />
                             </span>
-                            <UpdateProfileButton
-                                label="Upload"
-                                onClick={handleEditClick}
-                            />
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                style={{ display: "none" }}
-                                onChange={handleChange}
-                            />
-                        </span>
-                        {error && <p className="error-message">{error}</p>}
-                        <span className="updateProfileForm">
-                            <Input
-                                label="First name"
-                                htmlFor="firstName"
-                                id="firstName"
-                                type="text"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                            <Input
-                                label="Last name"
-                                htmlFor="lastName"
-                                id="lastName"
-                                type="text"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                            <Input
-                                label="Date of Birth"
-                                htmlFor="dateOfBirth"
-                                id="dateOfBirth"
-                                type="date"
-                                value={dateOfBirth}
-                                onChange={(e) => setDateOfBirth(e.target.value)}
-                            />
-                            <Input
-                                label="Phone Number"
-                                htmlFor="phoneNumber"
-                                id="phoneNumber"
-                                type="text"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                            />
-                            <Input
-                                label="Address"
-                                htmlFor="address"
-                                id="address"
-                                type="text"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                            />
-                            <Input
-                                label="Email"
-                                htmlFor="email"
-                                id="email"
-                                type="email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                disabled
-                            />
-                            <UpdateProfileButton
-                                label={loading ? "Saving Changes..." : "Save changes"}
-                                className="entryFormButton"
-                                onClick={handleUpload}
-                                disabled={loading}
-                            />
+                            <span className="updateProfileForm">
+                                <div>
+                                    {error && <p className="error-message">{error}</p>}
+                                    <Input
+                                        label="First name"
+                                        htmlFor="firstName"
+                                        id="firstName"
+                                        type="text"
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                    />
+                                </div>
+                                <Input
+                                    label="Last name"
+                                    htmlFor="lastName"
+                                    id="lastName"
+                                    type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                                <Input
+                                    label="Date of Birth"
+                                    htmlFor="dateOfBirth"
+                                    id="dateOfBirth"
+                                    type="date"
+                                    value={dateOfBirth}
+                                    onChange={(e) => setDateOfBirth(e.target.value)}
+                                />
+                                <Input
+                                    label="Phone Number"
+                                    htmlFor="phoneNumber"
+                                    id="phoneNumber"
+                                    type="text"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                />
+                                <Input
+                                    label="Address"
+                                    htmlFor="address"
+                                    id="address"
+                                    type="text"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
+                                <Input
+                                    label="Email"
+                                    htmlFor="email"
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    disabled
+                                />
+                                <HomePageButton
+                                    label={loading ? "Saving Changes..." : "Save changes"}
+                                    className="entryFormButton"
+                                    onClick={handleUpload}
+                                    disabled={loading}
+                                />
+                            </span>
                         </span>
                     </div>
                 </section>
