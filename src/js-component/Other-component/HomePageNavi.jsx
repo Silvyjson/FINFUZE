@@ -1,5 +1,7 @@
 import React from "react";
+import { getAuth, signOut } from "firebase/auth";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Menubar } from "./Navigation";
 
 const HomePageNavItem = (props) => {
     const { title, src, selectedSrc, nav } = props;
@@ -21,35 +23,72 @@ const HomePageNavItem = (props) => {
 }
 
 function HomePageNav() {
+
+    const navigate = useNavigate();
+    const auth = getAuth();
+
+    const userSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                navigate("/login-page");
+            })
+            .catch((error) => console.log(error));
+    };
+
+    const togglehomepageNav = () => {
+        const menuIcon = document.querySelector(`.homepageNav-menu-icon`);
+        const homePageMenu = document.querySelector(`.homePageMenu_section`);
+        const homePageMenuLogo = document.querySelector(`.homepageNavLogo_section`);
+
+        menuIcon.classList.toggle("open");
+
+        homePageMenuLogo.classList.toggle("homepage-logo")
+
+        homePageMenu.classList.toggle("get-menu");
+    }
+
     return (
-        <section className="homePageMenu_section">
-            <span>
-                <h1>Finfuze.</h1>
-                <HomePageNavItem
-                    title="Dashboard"
-                    src="./image/menu-square.png"
-                    selectedSrc="./image/menu-square1.png"
-                    nav="/home-page"
+        <>
+            <div className="homepageNavLogo_section">
+                <Menubar
+                    onClick={togglehomepageNav}
+                    className="homepageNav-menu-icon"
                 />
-                <HomePageNavItem
-                    title="Profile Update"
-                    src="./image/user.png"
-                    selectedSrc="./image/user1.png"
-                    nav="/profile-settings-page"
-                />
-                <HomePageNavItem
-                    title="Bank Information"
-                    src="./image/bank.png"
-                    selectedSrc="./image/bank1.png"
-                    nav="/addBankInfoPage-page"
-                />
-                <HomePageNavItem
-                    title="Financial literacy"
-                    src="./image/book-04.png"
-                    selectedSrc="./image/book-04.png"
-                />
-            </span>
-        </section>
+                <h1 className="homepageNavLogo">Finfuze.</h1>
+            </div>
+            <section className="homePageMenu_section">
+                <span className="homePageMenu_centainer">
+                    <h1 className="homepageNav--Logo">Finfuze.</h1>
+                    <HomePageNavItem
+                        title="Dashboard"
+                        src="./image/menu-square.png"
+                        selectedSrc="./image/menu-square1.png"
+                        nav="/home-page"
+                    />
+                    <HomePageNavItem
+                        title="Profile Update"
+                        src="./image/user.png"
+                        selectedSrc="./image/user1.png"
+                        nav="/profile-settings-page"
+                    />
+                    <HomePageNavItem
+                        title="Bank Information"
+                        src="./image/bank.png"
+                        selectedSrc="./image/bank1.png"
+                        nav="/addBankInfoPage-page"
+                    />
+                    <HomePageNavItem
+                        title="Financial literacy"
+                        src="./image/book-04.png"
+                        selectedSrc="./image/book-04.png"
+                    />
+                    <div className="homePageMenu_content" onClick={userSignOut}>
+                        <img src="./image/sign-out.png" alt="signout" />
+                        <h3>Sign Out</h3>
+                    </div>
+                </span>
+            </section>
+        </>
     );
 }
 

@@ -3,6 +3,7 @@ import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
 
@@ -38,8 +39,6 @@ function LoginComponent() {
                 }
             })
             .catch((error) => {
-                console.error(error.code);
-                console.error(error.message);
 
                 switch (error.code) {
                     case "auth/invalid-credential":
@@ -68,49 +67,62 @@ function LoginComponent() {
     }
 
     return (
-        <section className="entryForm-section">
-            <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
-            <div className="entryForm-container">
-                <h1>Login</h1>
-                <p>Hi, welcome back</p>
-                {error && <p className="error-message">{error}</p>}
-                <form onSubmit={signInAuth} className="entry-form">
-                    <Input
-                        label="Email"
-                        htmlFor="email"
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={email}
-                        placeholder="E.g johndoe@email.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Input
-                        label="Password"
-                        htmlFor="password"
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        placeholder="Enter your password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <div className="formAdditional-info">
-                        <span>
-                            <input type="checkbox" id="RememberMe" />
-                            <label htmlFor="RememberMe">Remember me</label>
+        <>
+            {loading ? (
+                <div className="loading-spinner">
+                    <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
+                </div>
+            ) : (
+                <section className="entryForm-section">
+                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
+                    <div className="entryForm-container">
+                        <h1>Login</h1>
+                        <p>Hi, welcome back</p>
+                        {error && <b className="error-message">
+                            <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                            {error}
+                        </b>}
+                        <form onSubmit={signInAuth} className="entry-form">
+                            <Input
+                                label="Email"
+                                htmlFor="email"
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={email}
+                                placeholder="E.g johndoe@email.com"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <Input
+                                label="Password"
+                                htmlFor="password"
+                                id="password"
+                                type="password"
+                                name="password"
+                                value={password}
+                                placeholder="Enter your password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <div className="formAdditional-info">
+                                <span>
+                                    <input type="checkbox" id="RememberMe" />
+                                    <label htmlFor="RememberMe">Remember me</label>
+                                </span>
+                                <span onClick={resetPassword} className="highlighted-text">Forgot password?</span>
+                            </div>
+                            <Button
+                                label="Login"
+                                className="entryFormButton"
+                                disabled={loading}
+                            />
+                        </form>
+                        <span className="entryFormnavi-link">
+                            Not registered yet? <Navigation label="Create an account" nav="/signUp-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" />
                         </span>
-                        <span onClick={resetPassword} className="highlighted-text">Forgot password?</span>
                     </div>
-                    <Button
-                        label={loading ? "Logging In..." : "Login"}
-                        className="entryFormButton"
-                        disabled={loading}
-                    />
-                </form>
-                <span>Not registered yet? <Navigation label="Create an account" nav="/signUp-page" src="./image/arrow-up-right-01.png" className="highlighted-text naviPropstyle" /></span>
-            </div>
-        </section>
+                </section>
+            )}
+        </>
     );
 }
 

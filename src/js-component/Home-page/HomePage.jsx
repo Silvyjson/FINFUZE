@@ -34,6 +34,7 @@ function HomePage() {
     const [photoURL, setPhotoURL] = useState("./image/Ellipse 39.png");
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null)
+    const [internetError, setInternetError] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,7 +43,7 @@ function HomePage() {
                 if (user) {
                     const { uid } = user;
                     const userDoc = await getDoc(doc(firestore, "users", uid));
-    
+
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
                         setUserData(userData);
@@ -50,21 +51,20 @@ function HomePage() {
                 }
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching user data:", error);
                 setLoading(false);
+                setInternetError("Unable to fetch user data. Check your internet connection and try again.")
             }
         };
-    
+
         auth.onAuthStateChanged(fetchData);
     }, []);
-    
+
 
     useEffect(() => {
         const user = auth.currentUser;
 
         if (user) {
             const { photoURL } = user;
-            console.log("Photo URL:", photoURL);
             setPhotoURL(photoURL || "./image/Ellipse 39.png");
         }
     }, [auth.currentUser]);
@@ -77,43 +77,54 @@ function HomePage() {
                 </div>
             ) : (
                 <section>
-                    <HomePageNav />
-                    <NotificationBell />
-                    <div className="main_section homapage-section">
-                        <span className="userImage">
-                            <img src={photoURL} alt="userIcon" />
-                            {userData && <p>Hello, {userData.firstName}!</p>}
-                        </span>
-                        <h1 className="QA">Quick Action </h1>
-                        <span className="homePage-content">
-                            <HomePageQuickNav
-                                title="Update Profile"
-                                src="./image/user.png"
-                                explore="Edit"
-                                nav="/profile-settings-page"
-                                className="default"
-                            />
-                            <HomePageQuickNav
-                                title="Add Bank Information"
-                                src="./image/bank.png"
-                                explore="Add"
-                                nav="/addBankInfoPage-page"
-                                className="bank"
-                            />
-                            <HomePageQuickNav
-                                title="Explore Financial Tips"
-                                src="./image/book-04.png"
-                                explore="Explore"
-                                nav=""
-                                className="tips"
-                            />
-                            <HomePageQuickNav
-                                title="Do More With Finfuze (Coming Soon)"
-                                src="./image/loading-01.png"
-                                className="coming-soon"
-                            />
-                        </span>
-                    </div>
+                    {internetError ? (
+                        <div className="loading-spinner internetError">
+                            <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                            <h1>{internetError}</h1>
+                        </div>
+                    ) : (
+                        <section>
+                            <HomePageNav />
+                            <NotificationBell />
+                            <div className="main_section">
+                                <div>
+                                    <span className="userImage">
+                                        <img src={photoURL} alt="userIcon" />
+                                        {userData && <p>Hello, {userData.firstName}!</p>}
+                                    </span>
+                                    <h1 className="QA">Quick Action </h1>
+                                    <span className="homePage-content">
+                                        <HomePageQuickNav
+                                            title="Update Profile"
+                                            src="./image/user.png"
+                                            explore="Edit"
+                                            nav="/profile-settings-page"
+                                            className="default"
+                                        />
+                                        <HomePageQuickNav
+                                            title="Add Bank Information"
+                                            src="./image/bank.png"
+                                            explore="Add"
+                                            nav="/addBankInfoPage-page"
+                                            className="bank"
+                                        />
+                                        <HomePageQuickNav
+                                            title="Explore Financial Tips"
+                                            src="./image/book-04.png"
+                                            explore="Explore"
+                                            nav=""
+                                            className="tips"
+                                        />
+                                        <HomePageQuickNav
+                                            title="Do More With Finfuze (Coming Soon)"
+                                            src="./image/loading-01.png"
+                                            className="coming-soon"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+                        </section>
+                    )}
                 </section>
             )}
         </>

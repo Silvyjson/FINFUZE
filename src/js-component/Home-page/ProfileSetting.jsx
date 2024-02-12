@@ -21,12 +21,14 @@ function ProfileSettings() {
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [loadingProfile, setLoadingProfile] = useState(true);
+    const [existImageFile, setExistImageFile] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
+    const [internetError, setInternetError] = useState("");
     const [userDataUploaded, setUserDataUploaded] = useState(false);
     const fileInputRef = useRef(null);
+    const deleteFile = useRef();
 
     const handleEditClick = () => {
         fileInputRef.current.click();
@@ -52,7 +54,6 @@ function ProfileSettings() {
         setPhotoURL("");
         setImageFile(null);
         setMessage("no file selected");
-
     };
 
     const handleUpload = async () => {
@@ -81,6 +82,7 @@ function ProfileSettings() {
                     const downloadURL = await getDownloadURL(storageRef);
 
                     updates.photoURL = downloadURL;
+                    setExistImageFile(true);
                 } else {
                     const storageRef = ref(storage, `profile_pictures/${auth.currentUser.uid}`);
 
@@ -89,6 +91,7 @@ function ProfileSettings() {
                     if (existingImageRef) {
                         await deleteObject(storageRef);
                         updates.photoURL = "";
+                        setExistImageFile(false)
                     } else {
                         updates.photoURL = "";
                     }
@@ -130,7 +133,6 @@ function ProfileSettings() {
             }
 
         } catch (error) {
-            console.error("Error uploading profile data:", error);
             setError("Error uploading profile data");
         } finally {
             setLoading(false);
@@ -144,7 +146,7 @@ function ProfileSettings() {
                     try {
                         const { uid } = auth.currentUser;
                         const userDoc = await getDoc(doc(firestore, "users", uid));
-                        setLoadingProfile(false);
+                        setLoading(false);
 
                         if (userDoc.exists()) {
                             const userData = userDoc.data();
@@ -162,12 +164,11 @@ function ProfileSettings() {
                         setEmail(email || "");
 
                     } catch (error) {
-                        console.error("Error fetching user data:", error);
-                        setLoadingProfile(false);
+                        setInternetError("Unable to fetch user data. Check your internet connection and try again.")
+                        setLoading(false);
                     }
                 } else {
-                    console.log("User profile is updated");
-                    setLoadingProfile(false);
+                    setLoading(false);
                 }
             });
         };
@@ -177,108 +178,119 @@ function ProfileSettings() {
 
     return (
         <>
-            {loadingProfile ? (
+            {loading ? (
                 <div className="loading-spinner">
                     <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
                 </div>
             ) : (
                 <section>
-                    {userDataUploaded && (
-                        <HomePageNav />
-                    )}
-                    <NotificationBell />
-                    <h1 className={`logo ${userDataUploaded ? 'noLogo' : ''}`}>Finfuze.</h1>
-                    <div className={`profileSettings ${!userDataUploaded ? 'userDataUploaded' : ''}`}>
-                        <span>
-                            <span className="uploadImage-section">
-                                <span className="uploadImage">
-                                    <img src="./image/file upload states.png" />
-                                    <div>
-                                        <h2>Upload your picture</h2>
-                                        <span>file format  Max. 5MB
-                                            {imageFile && (
-                                                <div onClick={handleDelete}>
-                                                    <FontAwesomeIcon icon="fa-regular fa-circle-xmark" />
-                                                </div>
-                                            )}
+                    {internetError ? (
+                        <div className="loading-spinner internetError">
+                            <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                            <h1>{internetError}</h1>
+                        </div>
+                    ) : (
+                        <section>
+                            {userDataUploaded ? <HomePageNav /> : <h1 className="logo">Finfuze.</h1>}
+                            <NotificationBell />
+                            <div className={`main_section profileSettings ${!userDataUploaded ? 'userDataUploaded' : ''}`}>
+                                <span>
+                                    <span className="uploadImage-section">
+                                        <span className="uploadImage">
+                                            <img src="./image/file upload states.png" alt="Upload your picture" />
+                                            <div>
+                                                <h2>Upload your picture</h2>
+                                                <span>file format  Max. 5MB
+                                                    {(imageFile || existImageFile) &&
+                                                        <div onClick={handleDelete} ref={deleteFile}>
+                                                            <FontAwesomeIcon icon="fa-regular fa-circle-xmark" />
+                                                        </div>
+                                                    }
+                                                </span>
+                                                {message && <p style={{ color: "red" }}>{message}</p>}
+                                            </div>
                                         </span>
-                                        {message && <p style={{ color: "red" }}>{message}</p>}
+                                        <HomePageButton
+                                            label="Upload"
+                                            onClick={handleEditClick}
+                                        />
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            style={{ display: "none" }}
+                                            onChange={handleChange}
+                                        />
+                                    </span>
+                                    <div className="error-message-container">
+                                        {error && <p className="error-message">
+                                            <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                                            {error}
+                                        </p>}
                                     </div>
+                                    <span className="updateProfileForm">
+                                        <div>
+                                            <Input
+                                                label="First name"
+                                                htmlFor="firstName"
+                                                id="firstName"
+                                                type="text"
+                                                value={firstName}
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                            />
+                                        </div>
+                                        <Input
+                                            label="Last name"
+                                            htmlFor="lastName"
+                                            id="lastName"
+                                            type="text"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                        <Input
+                                            label="Date of Birth"
+                                            htmlFor="dateOfBirth"
+                                            id="dateOfBirth"
+                                            type="date"
+                                            value={dateOfBirth}
+                                            onChange={(e) => setDateOfBirth(e.target.value)}
+                                        />
+                                        <Input
+                                            label="Phone Number"
+                                            htmlFor="phoneNumber"
+                                            id="phoneNumber"
+                                            type="text"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                        />
+                                        <Input
+                                            label="Address"
+                                            htmlFor="address"
+                                            id="address"
+                                            type="text"
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                        />
+                                        <Input
+                                            label="Email"
+                                            htmlFor="email"
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            disabled
+                                        />
+                                        <HomePageButton
+                                            label="Save changes"
+                                            className="entryFormButton"
+                                            onClick={handleUpload}
+                                            disabled={loading}
+                                        />
+                                    </span>
                                 </span>
-                                <HomePageButton
-                                    label="Upload"
-                                    onClick={handleEditClick}
-                                />
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    style={{ display: "none" }}
-                                    onChange={handleChange}
-                                />
-                            </span>
-                            <span className="updateProfileForm">
-                                <div>
-                                    {error && <p className="error-message">{error}</p>}
-                                    <Input
-                                        label="First name"
-                                        htmlFor="firstName"
-                                        id="firstName"
-                                        type="text"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                    />
-                                </div>
-                                <Input
-                                    label="Last name"
-                                    htmlFor="lastName"
-                                    id="lastName"
-                                    type="text"
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                />
-                                <Input
-                                    label="Date of Birth"
-                                    htmlFor="dateOfBirth"
-                                    id="dateOfBirth"
-                                    type="date"
-                                    value={dateOfBirth}
-                                    onChange={(e) => setDateOfBirth(e.target.value)}
-                                />
-                                <Input
-                                    label="Phone Number"
-                                    htmlFor="phoneNumber"
-                                    id="phoneNumber"
-                                    type="text"
-                                    value={phoneNumber}
-                                    onChange={(e) => setPhoneNumber(e.target.value)}
-                                />
-                                <Input
-                                    label="Address"
-                                    htmlFor="address"
-                                    id="address"
-                                    type="text"
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                />
-                                <Input
-                                    label="Email"
-                                    htmlFor="email"
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    disabled
-                                />
-                                <HomePageButton
-                                    label={loading ? "Saving Changes..." : "Save changes"}
-                                    className="entryFormButton"
-                                    onClick={handleUpload}
-                                    disabled={loading}
-                                />
-                            </span>
-                        </span>
-                    </div>
+                            </div>
+                        </section>
+                    )}
                 </section>
             )}
         </>

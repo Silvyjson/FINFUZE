@@ -4,11 +4,31 @@ import Navigation, { Menubar } from "../Other-component/Navigation";
 
 function Header() {
 
+  function toggleList() {
+
+    const menuIcon = document.querySelector(`.headersection-menu-icon`)
+
+    const navElements = document.querySelectorAll(`.navElement`);
+
+    menuIcon.classList.toggle("open");
+
+    navElements.forEach(navElement => {
+      navElement.classList.toggle("open_nav");
+    });
+
+  }
+
   return (
     <section className="header_section">
       <span>
         <nav className="header_nav-section">
-          <img src="./image/Finfuze logo 2 1.png" alt="logo" />
+          <div className="logo-menubar-container">
+            <img src="./image/Finfuze logo 2 1.png" alt="logo" />
+            <Menubar
+              onClick={toggleList}
+              className="headersection-menu-icon"
+            />
+          </div>
 
           <ul className="navElement">
             <li>Home</li>
@@ -22,8 +42,6 @@ function Header() {
             <li><Navigation label="Login " nav="/login-page" /></li>
             <li><Navigation label="Sign Up" nav="/signUp-page" /></li>
           </ul>
-
-          <Menubar />
         </nav>
 
         <span className="header_content">

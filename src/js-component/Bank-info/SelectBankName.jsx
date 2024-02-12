@@ -14,7 +14,7 @@ const SelectBankName = (props) => {
         onChange={onChange}
         required
       >
-        <option>Select Bank</option>
+        <option value="">Select Bank</option>
         <optgroup label="Banks">
           <option value="Access Bank">Access Bank</option>
           <option value="Asset Management Corporation of Nigeria">Asset Management Corporation of Nigeria</option>

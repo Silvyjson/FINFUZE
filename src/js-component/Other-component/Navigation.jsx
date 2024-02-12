@@ -1,24 +1,12 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 
-export function Menubar() {
-  const menuIconRef = useRef(null);
+export function Menubar(props) {
 
-  function toggleList() {
-   
-    const navElements = document.querySelectorAll(`.navElement`);
-    
-    menuIconRef.current?.classList.toggle("open");
-
-    navElements.forEach(navElement => {
-      navElement.classList.toggle("open_nav");
-    });
-    
-  }
+  const {onClick, className} = props;
 
   return (
-    <div className="menu-icon" onClick={toggleList} ref={menuIconRef}>
-      <div></div>
+    <div className={`menu-icon ${className}`} onClick={onClick}>
       <div></div>
       <div></div>
     </div>

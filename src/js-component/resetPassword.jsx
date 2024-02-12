@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input } from "./Other-component/Form";
 import Navigation from "./Other-component/Navigation";
 
@@ -20,12 +21,8 @@ function ResetPasswordComponent() {
 
         try {
             await sendPasswordResetEmail(auth, email);
-            console.log("Password reset email sent successfully");
             setMessage(`A password reset email has been sent to ${email}. Please check your inbox.`);
         } catch (error) {
-            console.error(error.code);
-            console.error(error.message);
-
             setError("Error resetting password. Please try again.");
         } finally {
             setLoading(false);
@@ -37,32 +34,48 @@ function ResetPasswordComponent() {
     }
 
     return (
-        <section className="entryForm-section">
-            <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
-            <div className="entryForm-container">
-                <h1>Forgot password?</h1>
-                {message && <p>{message}</p>}
-                {error && <p className="error-message">{error}</p>}
-                <form onSubmit={resetPasswordAuth} className="entry-form">
-                    <Input
-                        label="Email"
-                        htmlFor="email"
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={email}
-                        placeholder="E.g johndoe@email.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Button
-                        label={loading ? "Reseting..." : "Reset"}
-                        className="entryFormButton"
-                        disabled={loading}
-                    />
-                </form>
-                <span onClick={haddleNavigate} className="naviPropstyle"><img src="./image/arrow-left-02.png" alt="" />Back to login</span>
-            </div>
-        </section>
+        <>
+            {loading ? (
+                <div className="loading-spinner">
+                    <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
+                </div>
+            ) : (
+                <section className="entryForm-section">
+                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
+                    <div className="entryForm-container">
+                        <h1>Forgot password?</h1>
+                        <div className="error-message-container">
+                            {message && <b className="message">
+                                <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                                {message}
+                            </b>}
+                            {error && <b className="error-message">
+                                <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                                {error}
+                            </b>}
+                        </div>
+                        <form onSubmit={resetPasswordAuth} className="entry-form">
+                            <Input
+                                label="Email"
+                                htmlFor="email"
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={email}
+                                placeholder="E.g johndoe@email.com"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <Button
+                                label={loading ? "Reseting..." : "Reset"}
+                                className="entryFormButton"
+                                disabled={loading}
+                            />
+                        </form>
+                        <span onClick={haddleNavigate} className="naviPropstyle"><img src="./image/arrow-left-02.png" alt="" />Back to login</span>
+                    </div>
+                </section>
+            )}
+        </>
     );
 }
 

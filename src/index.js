@@ -16,6 +16,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+import EditBankInfoForm from './js-component/Bank-info/EditBankInfoForm';
 
 library.add(fab, fas, far);
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   { path: "/profile-settings-page", element: <ProfileSettings/> },
   { path: "/addBankInfoPage-page", element: <AddBankInfoPage /> },
   { path: "/getBankInfoForm-page", element: <GetBankInfoForm /> },
+  { path: "/editBankInfoForm-page", element: <EditBankInfoForm /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

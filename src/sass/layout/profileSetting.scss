@@ -1,13 +1,9 @@
 .profileSettings {
-  position: relative;
   display: block;
-  margin: 50px 0 0 30%;
-  padding: 0 50px;
-  width: 60%;
 }
 
 .userDataUploaded {
-  padding: 50px 0 50px 50px;
+  padding: 50px 0;
   position: relative;
   display: flex;
   justify-content: center;
@@ -28,13 +24,11 @@
   color: $primary-color;
 }
 
-.noLogo {
-  display: none;
-}
-
 .uploadImage-section {
+  padding-top: 50px;
   display: flex;
   gap: 15%;
+
   .uploadImage {
     display: flex;
     align-items: center;
@@ -70,4 +64,21 @@
   gap: 30px;
   margin-top: 30px;
   align-items: flex-end;
+  width: 100%;
+
+  .InputStle {
+    max-width: 400px;
+    width: 90%;
+    height: 45px;
+    padding: 0 20px;
+  }
+  
+  .selectStle {
+    max-width: 420px;
+    width: 100%;
+    height: 45px;
+    padding: 0 20px;
+    border-radius: 10px;
+    border: 1px solid #d7d7d7;
+  }
 }

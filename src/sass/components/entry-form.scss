@@ -1,6 +1,8 @@
 .entryForm-section {
+  margin: 20px 0 0 30px;
+
   img {
-    width: 200px;
+    width: 160px;
     height: 90px;
   }
 }
@@ -77,4 +79,9 @@
   span {
     cursor: pointer;
   }
+}
+
+.entryFormnavi-link {
+  display: flex;
+  align-items: center;
 }
