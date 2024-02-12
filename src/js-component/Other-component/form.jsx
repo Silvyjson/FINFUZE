@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-
-export const Input = (props) => {
-  const { placeholder, type, className, required, htmlFor, label } = props;
-
+import React, { Children, useState } from "react";
+import { Link } from "react-router-dom";
+// import { Formik } from "formik";
+export const Input = ({
+  placeholder,
+  type,
+  className,
+  onChange,
+  htmlFor,
+  label,
+  onBlur,
+}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -10,40 +17,50 @@ export const Input = (props) => {
   };
 
   return (
-    <span className="inputFormStyle">
+    <div className="inputFormStyle">
       <label htmlFor={htmlFor}>{label}</label>
-      <input type={type === "password" ? (isPasswordVisible ? "text" : "password") : type}
+      <input
+        type={
+          type === "password" ? (isPasswordVisible ? "text" : "password") : type
+        }
         placeholder={placeholder}
         className={`InputStle ${className}`}
-        required={required}
+        onChange={onChange}
+        onBlur={onBlur}
       />
       <div className="password-container">
         {type === "password" && (
           <img
-            src={isPasswordVisible ? "./image/view-off.png" : "./image/view-off.png"}
+            src={
+              isPasswordVisible
+                ? "./image/view-off.png"
+                : "./image/view-off.png"
+            }
             alt="password-view-icon"
             onClick={togglePasswordVisibility}
           />
         )}
       </div>
-    </span>
+    </div>
   );
-}
+};
 
-export const Button = (props) => {
-  const { label, className } = props;
-
+export const Button = ({ onClick, className, text, to }) => {
   return (
-    <button type="submit" className={`buttonStyle ${className}`}>{label}</button>
+    <button
+      type="submit"
+      className={`buttonStyle ${className}`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   );
 };
 
 const HeaderButton = (props) => {
   const { label, className } = props;
 
-  return (
-    <button className={`headerButton ${className}`}>{label}</button>
-  );
+  return <button className={`headerButton ${className}`}>{label}</button>;
 };
 
 export default HeaderButton;

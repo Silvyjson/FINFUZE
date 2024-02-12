@@ -1,6 +1,16 @@
 import React from "react";
 import { Button, Input } from "../Other-component/form";
+import InputFormField from "../form/InputFormField";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import SubmitButton from "../form/SubmitButton";
+import AppForm from "../form/AppForm";
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email().required().label("Email"),
+});
+
+/////////////////
 const FooterLinks = (props) => {
   const { title, links } = props;
 
@@ -15,39 +25,54 @@ const FooterLinks = (props) => {
 };
 
 const currentYear = new Date().getFullYear();
-
+////////////////////////
 function Footer() {
+  const initialValue = {
+    email: "",
+  };
+  const subscribe = function (value) {
+    console.log(value);
+  };
   return (
     <footer className="footer_section">
-      <span className="newsletter-section">
+      <div className="newsletter-section">
         <h1>Newsletter</h1>
         <p>
           Subscribe to our newsletter to get your weekly dose of news, updates,
           tips and special offers
         </p>
         <form action="" className="newsletter-form">
-          <div>
-            <Input
-              type="email"
-              placeholder="Enter your email address"
-              className="newsletterStyle"
-              required
-            />
-            <img
-              src="./image/mail-02.png"
-              alt="mail-logo"
-              className="mail-logo"
-            />
+          <div className="form_container">
+            <AppForm
+              initialValues={initialValue}
+              onSubmit={(values) => subscribe(values)}
+              validationSchema={validationSchema}
+            >
+              <InputFormField
+                name="email"
+                // label="Email"
+                type="email"
+                placeholder="E.g johndoe@email.com"
+                className="subscribe-input-style"
+              />
+              {/* <div className="subscribe_input">
+                
+              </div> */}
+
+              <SubmitButton title="subscribe" />
+            </AppForm>
           </div>
-          <Button label="Subscribe" />
         </form>
-      </span>
+      </div>
       <div className="footer-container">
-        <img
-          src="./image/Finfuze logo 1 2.png"
-          alt="logo"
-          className="footer-logo"
-        />
+        <div className="footer_logo-container">
+          <img
+            src="./image/Finfuze logo 1 2.png"
+            alt="logo"
+            className="footer-logo"
+          />
+        </div>
+
         <FooterLinks
           title="Contact Information"
           links={["Company address", "Phone number", "Email address"]}

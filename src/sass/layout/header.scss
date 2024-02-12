@@ -1,9 +1,56 @@
-.header_section {
-  @include display-style();
+.header {
+  width: 100%;
+}
+.header_content {
   background-color: $background-color;
-  color: $tex-color;
-  padding: 20px;
-  height: 75vh;
+  height: 100dvh;
+  padding: 2rem;
+  @include display-style();
+  justify-content: center;
+  color: $text-color;
+  flex-wrap: wrap;
+  // outline: 2px solid red;
+  .header-section_intro {
+    flex: 1 0 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    @include respond(phone) {
+      min-width: 100%;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 3rem;
+      @include respond(phone) {
+        font-size: 2rem;
+      }
+
+      b {
+        color: $primary-color;
+      }
+    }
+
+    p {
+      font-size: 2.2rem;
+      font-weight: 500;
+      line-height: 2.5rem;
+    }
+  }
+  .cube-img {
+    flex: 1 0 50%;
+    @include respond(phone) {
+      flex: 1 0 100%;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 45rem;
+      opacity: 0.9;
+      animation: rotateAnimation 100s linear infinite;
+    }
+  }
 }
 
 .header_nav-section {
@@ -21,86 +68,12 @@
   cursor: pointer;
 }
 
-.navlist :nth-child(2) {
-  @include display-style();
-  justify-content: center;
-  width: 74px;
-  height: 30px;
-  border-radius: 20px;
-  background-color: $primary-color;
-}
-
-.header_content {
-  @include display-style();
-  justify-content: space-evenly;
-}
-
-.header-section_intro {
-  width: 50%;
-
-  h1 {
-    font-size: 4.5rem;
-    font-weight: 700;
-    line-height: 5rem;
-    margin-bottom: 10px;
-
-    b {
-      color: $primary-color;
-    }
-  }
-
-  p {
-    font-size: 2.2rem;
-    font-weight: 500;
-    line-height: 2rem;
-  }
-}
-
-.button {
-  margin-top: 20px;
-  @include display-style;
-  gap: 20px;
-}
-
-.headerButton {
-  background-color: $primary-color;
-  color: #fff;
-  width: 20rem;
-  height: 50px;
-  border-radius: 25px;
-  font-size: 1.8rem;
-  font-weight: 500;
-  line-height: 2.5rem;
-  letter-spacing: 0em;
-  text-align: center;
-  cursor: pointer;
+.header_button-container {
+  display: flex;
+  gap: 2rem;
 }
 
 .h2button {
   background-color: transparent;
   border: 1px solid $page-background-color;
-}
-
-.cube-img {
-  overflow: hidden;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    max-height: 45rem;
-    opacity: 0.9;
-    animation: rotateAnimation 100s linear infinite;
-  }
-}
-
-@keyframes rotateAnimation {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(360deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
 }

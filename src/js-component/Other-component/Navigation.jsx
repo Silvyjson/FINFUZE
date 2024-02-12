@@ -30,7 +30,10 @@ export function Menubar() {
   );
 }
 
-const Navigation = (props) => {
+export const Button = function ({ type, text, width }) {
+  return <button className={`headerButton ${width}`}>{text}</button>;
+};
+const NavigationButtons = (props) => {
   const { label, nav, src, className } = props;
 
   const navigate = useNavigate();
@@ -47,4 +50,4 @@ const Navigation = (props) => {
   );
 };
 
-export default Navigation;
+export default NavigationButtons;

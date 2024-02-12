@@ -1,0 +1,9 @@
+.logo_container {
+  height: 8rem;
+  width: 15rem;
+  .logo {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+  }
+}

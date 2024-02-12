@@ -1,0 +1,127 @@
+.navigation {
+  background-color: $background-color;
+  max-width: 100%;
+  width: 100%;
+  &_checkbox {
+    display: none;
+  }
+  &_button {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+    @include respond(phone) {
+      visibility: visible;
+      opacity: 1;
+      background-color: transparent;
+      outline: 1px solid white;
+      background-color: $background-color;
+      box-shadow: 0 10px 30px -15px black;
+      height: 4rem;
+      width: 4rem;
+      display: inline-block;
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      border-radius: 20%;
+      z-index: 10;
+    }
+  }
+  &_icon {
+    position: relative;
+    margin-top: 1.9rem;
+    margin-left: 1rem;
+    &,
+    &::before,
+    &::after {
+      width: 2rem;
+      height: 2px;
+      background-color: white;
+      display: inline-block;
+      transition: all 0.2s ease;
+    }
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+    &::before {
+      top: -0.8rem;
+    }
+    &::after {
+      bottom: -0.8rem;
+    }
+  }
+  &_button:hover &_icon::before {
+    top: -1rem;
+  }
+  &_button:hover &_icon::after {
+    bottom: -1rem;
+  }
+  &_checkbox:checked + &_button &_icon {
+    background-color: transparent;
+  }
+  &_checkbox:checked + &_button &_icon::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  &_checkbox:checked + &_button &_icon::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+  }
+
+  // item
+  &_item {
+    @include display-style;
+    justify-content: space-between;
+    color: $text-color;
+    // outline: 2px solid green;
+    padding: 0 2rem;
+  }
+  &_nav {
+    @include display-style;
+    justify-content: space-between;
+    gap: 2rem;
+    // outline: 2px solid red;
+    width: 70%;
+    transition: all 0.2s ease-in-out;
+    @include respond(phone) {
+      background-color: $background-color;
+      -webkit-backdrop-filter: blur(100px);
+      backdrop-filter: blur(100px);
+      border-radius: 10px;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      position: fixed;
+      right: 2%;
+      top: 1%;
+      z-index: 9;
+      padding: 2rem;
+    }
+    .navElement {
+      font-size: 1.5rem;
+      // outline: 2px solid white;
+      @include respond(phone) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &_checkbox:checked ~ &_container &_item &_nav {
+    visibility: visible;
+    opacity: 1;
+  }
+  &_buttons {
+    display: flex;
+    gap: 2rem;
+    @include respond(phone) {
+      flex-direction: column;
+    }
+  }
+}
