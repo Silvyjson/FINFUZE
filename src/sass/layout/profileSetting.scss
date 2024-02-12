@@ -1,0 +1,84 @@
+.profileSettings {
+  display: block;
+}
+
+.userDataUploaded {
+  padding: 50px 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  width: 100%;
+}
+
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  letter-spacing: -0.03em;
+  padding-left: 10%;
+  color: $primary-color;
+}
+
+.uploadImage-section {
+  padding-top: 50px;
+  display: flex;
+  gap: 15%;
+
+  .uploadImage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0em;
+    margin: 0;
+  }
+  span {
+    display: flex;
+    gap: 5px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0em;
+    color: $gray-text-color;
+    margin: 0;
+
+    div {
+      cursor: pointer;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}
+
+.updateProfileForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 30px;
+  align-items: flex-end;
+  width: 100%;
+
+  .InputStle {
+    max-width: 400px;
+    width: 90%;
+    height: 45px;
+    padding: 0 20px;
+  }
+  
+  .selectStle {
+    max-width: 420px;
+    width: 100%;
+    height: 45px;
+    padding: 0 20px;
+    border-radius: 10px;
+    border: 1px solid #d7d7d7;
+  }
+}

@@ -11,6 +11,10 @@
   justify-content: space-around;
 }
 
+.headersection-menu-icon {
+  display: none;
+}
+
 .navElement {
   @include display-style();
   gap: 20px;

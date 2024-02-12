@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input } from "../Other-component/form";
+import { Button, Input } from "../Other-component/Form";
 
 const FooterLinks = (props) => {
     const { title, links } = props;
@@ -22,7 +22,12 @@ function Footer() {
                 <p>Subscribe to our newsletter to get your weekly dose of news, updates, tips and special offers</p>
                 <form action="" className="nesletter-form">
                     <div>
-                        <Input type="email" placeholder="Enter your email address" className="newsletterStyle" required />
+                        <Input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            className="newsletterStyle"
+                        />
                         <img src="./image/mail-02.png" alt="mail-logo" className="mail-logo" />
                     </div>
                     <Button label="Subscribe" />

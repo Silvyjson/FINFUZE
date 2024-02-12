@@ -5,17 +5,55 @@
 
   .header_section {
     align-items: normal;
-    height: 60vw;
+    height: 100%;
+    min-height: 60vh;
   }
 
   .header_nav-section {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    margin-right: 50px;
+    align-items: center;
+  }
+
+  .logo-menubar-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      margin-left: 20px;
+    }
+  }
+
+  .headersection-menu-icon {
+    margin-right: 20px;
   }
 
   .navElement {
+    width: 100%;
+    border-top: 5px solid #333;
     display: none;
-    z-index: 2;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    padding-top: 10px;
+    margin-top: 20px;
+    gap: 10px;
+
+    li {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .navlist {
+    padding: 0;
+    padding-bottom: 10px;
+    margin: 0;
+    border-top: none;
+    border-bottom: 5px solid #333;
   }
 
   .navlist :nth-child(2) {
@@ -26,27 +64,21 @@
     background-color: transparent;
   }
 
-  .menu-icon {
+  .headersection-menu-icon {
     display: block;
   }
 
   .open_nav {
-    display: block !important;
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    width: 100px;
-    height: 200px;
-    padding: 20px;
-    color: $background-color;
-    background-color: $page-background-color;
-    box-shadow: 0px 4px 4px 2px #0000000d;
+    display: flex !important;
   }
 
-  .navlist {
-    position: absolute;
-    top: 21.5%;
-    background-color: transparent;
+  .header_content {
+    margin-top: 20px;
+  }
+
+  .finfuze_intro {
+    width: 90%;
+    min-width: 150px;
   }
 
   .finfuzeArticle {
@@ -75,5 +107,249 @@
     display: grid;
     grid-template-columns: auto auto auto;
     justify-items: center;
+  }
+
+  .bankDatails-card--container,
+  .updateProfileForm,
+  .homePage-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: normal;
+  }
+
+  .notification-bell {
+    right: 50px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .header_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-section_intro {
+    width: 100%;
+    text-align: center;
+  }
+
+  .button {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .finfuze_intro {
+    width: 83%;
+  }
+
+  .card-img-text {
+    width: 70%;
+    min-width: 200px;
+    min-height: 300px;
+  }
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .homePageMenu_section {
+    display: none;
+  }
+
+  .get-menu {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 70%;
+    height: 100%;
+    font-size: 2rem;
+    z-index: 1;
+    padding-top: 100px;
+    background-color: $tex-color;
+  }
+
+  .homepageNavLogo_section {
+    display: flex;
+  }
+
+  .homepage-logo {
+    position: fixed !important;
+  }
+
+  .homepageNav--Logo {
+    display: none;
+  }
+
+  .homePageMenu_content {
+    margin-top: 20px;
+  }
+
+  .main_section {
+    padding: 100px 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+  }
+
+  .quickLink {
+    width: 443px;
+    min-width: 260px;
+    height: 180px;
+  }
+
+  .bankInfo {
+    display: flex;
+    justify-content: center;
+
+    h1 {
+      padding-top: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  html {
+    font-size: 35%;
+  }
+
+  .logo-menubar-container {
+    img {
+      margin-left: 0;
+    }
+  }
+
+  .headersection-menu-icon {
+    margin-right: 10px;
+  }
+
+  .finfuze_intro {
+    width: 100%;
+    min-width: 150px;
+  }
+
+  .finfuzeArticle {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .card-content:nth-child(2) {
+    .card-img-text p {
+      padding-right: 20px;
+    }
+  }
+
+  .footer-container {
+    @include display-style();
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .newletter-section {
+    p {
+      width: 70%;
+    }
+  }
+
+  .entryForm-section {
+    margin-left: 0;
+  }
+
+  .entry-form {
+    width: 80%;
+
+    .InputStle {
+      width: 85%;
+      padding: 0 20px;
+    }
+
+    .buttonStyle {
+      width: 100%;
+    }
+  }
+
+  .nesletter-form {
+    input {
+      width: 100%;
+      max-width: 150px;
+      padding: 0 45px;
+    }
+
+    .buttonStyle {
+      width: 100%;
+      min-width: 250px;
+    }
+  }
+
+  .quickLink {
+    max-width: 443px;
+    min-width: 230px;
+    width: 100%;
+  }
+
+  .homepageNavLogo_section {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+  }
+
+  .bankDatails-card {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .updateProfileForm {
+    .InputStle {
+      max-width: 400px;
+      width: 90%;
+      height: 45px;
+      padding: 0 20px;
+    }
+
+    .selectStle {
+      max-width: 420px;
+      width: 100%;
+      height: 45px;
+      padding: 0 20px;
+      border-radius: 10px;
+      border: 1px solid #d7d7d7;
+    }
+  }
+
+  .BDForm {
+
+    h1 {
+      padding-left: 30px;
+    }
+  }
+
+  .bankdetailForm {
+    padding: 0 30px;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .bankDatails-card {
+    max-width: 260px;
+    width: 100%;
+  }
+
+  .entry-form {
+    .InputStle {
+      width: 80%;
+      padding: 0 20px;
+    }
+  }
+
+  .updateProfileForm {
+    .InputStle {
+      width: 80%;
+    }
   }
 }
