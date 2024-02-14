@@ -131,7 +131,7 @@ function GetBankInfoForm() {
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section bankInfo BDForm">
-                                <span>
+                                <span className="page-content">
                                     <h1>Bank Information</h1>
                                     <div className="error-message-container">
                                         {error && <p className="error-message">
@@ -157,7 +157,7 @@ function GetBankInfoForm() {
                                             onChange={(e) => { setAccountHolderName(e.target.value); }}
                                             disabled
                                         />
-                                        <div>
+                                        <div className="inputErrorContainer">
                                             <Input
                                                 label="Account Number"
                                                 htmlFor="accountNumber"

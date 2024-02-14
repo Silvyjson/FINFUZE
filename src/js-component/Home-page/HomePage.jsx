@@ -87,7 +87,7 @@ function HomePage() {
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section">
-                                <div>
+                                <div className="page-content">
                                     <span className="userImage">
                                         <img src={photoURL} alt="userIcon" />
                                         {userData && <p>Hello, {userData.firstName}!</p>}

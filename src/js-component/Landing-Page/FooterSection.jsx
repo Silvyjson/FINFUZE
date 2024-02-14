@@ -64,7 +64,7 @@ function Footer() {
                 />
             </div>
             <div className="footer-copyright">
-                <p>Copyright © 2021 Finfuze.</p>
+                <p>Copyright © 2024 Finfuze.</p>
                 <p>All rights reserved.</p>
             </div>
         </footer>

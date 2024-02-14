@@ -56,7 +56,7 @@ function Header() {
             </p>
 
             <div className="button">
-              <HeaderButton label="Get started" />
+              <HeaderButton label="Get started" className="h1button" />
               <HeaderButton label="Learn more" className="h2button" />
             </div>
           </div>

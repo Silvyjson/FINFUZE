@@ -30,13 +30,18 @@ function ProfileSettings() {
     const fileInputRef = useRef(null);
     const deleteFile = useRef();
 
-    const handleEditClick = () => {
+    const handleUploadClick = () => {
         fileInputRef.current.click();
     };
 
-    const handleChange = (e) => {
+    const handleSelectFile = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (!file.type.startsWith('image/')) {
+                setMessage("Only image files are allowed");
+                return;
+            }
+            
             setImageFile(file);
             const reader = new FileReader();
             reader.onload = () => {
@@ -194,7 +199,7 @@ function ProfileSettings() {
                             {userDataUploaded ? <HomePageNav /> : <h1 className="logo">Finfuze.</h1>}
                             <NotificationBell />
                             <div className={`main_section profileSettings ${!userDataUploaded ? 'userDataUploaded' : ''}`}>
-                                <span>
+                                <span className="page-content">
                                     <span className="uploadImage-section">
                                         <span className="uploadImage">
                                             <img src="./image/file upload states.png" alt="Upload your picture" />
@@ -212,13 +217,13 @@ function ProfileSettings() {
                                         </span>
                                         <HomePageButton
                                             label="Upload"
-                                            onClick={handleEditClick}
+                                            onClick={handleUploadClick}
                                         />
                                         <input
                                             type="file"
                                             ref={fileInputRef}
                                             style={{ display: "none" }}
-                                            onChange={handleChange}
+                                            onChange={handleSelectFile}
                                         />
                                     </span>
                                     <div className="error-message-container">

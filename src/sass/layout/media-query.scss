@@ -188,11 +188,14 @@
   .main_section {
     padding: 100px 0;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 0;
     width: 100%;
+  }
+
+  .page-content {
+    display: block;
+    margin: auto ;
+    width: 80%;
   }
 
   .quickLink {
@@ -202,13 +205,19 @@
   }
 
   .bankInfo {
-    display: flex;
-    justify-content: center;
 
     h1 {
       padding-top: 0;
     }
   }
+
+  .message,
+.error-message {
+  max-width: 300px;
+  width: 100%;
+  max-height: 70px;
+  height: 100%;
+}
 }
 
 @media screen and (max-width: 500px) {
@@ -304,9 +313,10 @@
   }
 
   .updateProfileForm {
+    
     .InputStle {
       max-width: 400px;
-      width: 90%;
+      width: 85%;
       height: 45px;
       padding: 0 20px;
     }
@@ -332,6 +342,10 @@
     padding: 0 30px;
     width: 80%;
   }
+
+  .notification-bell {
+    right: 30px;
+  }
 }
 
 @media screen and (max-width: 340px) {
@@ -347,9 +361,11 @@
     }
   }
 
-  .updateProfileForm {
-    .InputStle {
-      width: 80%;
-    }
+  .message,
+  .error-message {
+    max-width: 220px;
+    width: 100%;
+    max-height: 70px;
+    height: 100%;
   }
 }

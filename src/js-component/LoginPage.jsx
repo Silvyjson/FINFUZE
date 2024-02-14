@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
@@ -14,6 +14,26 @@ function LoginComponent() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const handleDisableNavigation = (event) => {
+            event.preventDefault();
+        };
+    
+        window.history.pushState(null, "", window.location.pathname);
+        window.addEventListener("popstate", handleDisableNavigation);
+    
+        const isMobileDevice = window.innerWidth <= 600;
+    
+        if (!isMobileDevice) {
+            window.addEventListener("popstate", handleDisableNavigation);
+        }
+    
+        return () => {
+            window.removeEventListener("popstate", handleDisableNavigation);
+        };
+    }, []);
+    
 
     const signInAuth = (e) => {
         e.preventDefault();
@@ -104,7 +124,7 @@ function LoginComponent() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <div className="formAdditional-info">
-                                <span>
+                                <span className="rememberMe">
                                     <input type="checkbox" id="RememberMe" />
                                     <label htmlFor="RememberMe">Remember me</label>
                                 </span>

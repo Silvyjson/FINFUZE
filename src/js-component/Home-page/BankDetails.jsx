@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomePageNav, { NotificationBell } from "../Other-component/HomePageNavi";
 import { HomePageButton } from "../Other-component/Form";
@@ -11,17 +11,8 @@ import jsPDF from 'jspdf';
 const firestore = getFirestore();
 const auth = getAuth();
 const storage = getStorage();
+const storageRef = ref(storage, 'bankDetailsPDFs');
 
-const ShareOptionImg = (props) => {
-    const { src, onClick } = props;
-    return (
-        <section className="shareOptionImgContent">
-            <div>
-                <img src={src} alt="shareOptionImg" onClick={onClick} />
-            </div>
-        </section>
-    );
-}
 
 function AddBankInfoPage() {
     const location = useLocation();
@@ -29,11 +20,7 @@ function AddBankInfoPage() {
     const [bankDetails, setBankDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [copiedIndex, setCopiedIndex] = useState(null);
-    const [shareIndex, setShareIndex] = useState(null);
-    const [isShareOptionVisible, setShareOptionVisibility] = useState(false);
-    const [error, setError] = useState(null);
     const [internetError, setInternetError] = useState("");
-    const [shareError, setShareError] = useState(null);
 
     useEffect(() => {
         const fetchBankInfo = async () => {
@@ -79,14 +66,20 @@ function AddBankInfoPage() {
     const deleteBankDetails = async (index) => {
         const updatedBankDetails = [...bankDetails];
         const deletedBankDetail = updatedBankDetails.splice(index, 1)[0]; // Remove the item and get the deleted item
-
+        setLoading(true)
         try {
             const userDoc = doc(firestore, "users", auth.currentUser.uid);
             await setDoc(userDoc, { bankDetails: updatedBankDetails }, { merge: true });
             setBankDetails(updatedBankDetails);
 
+            const pdfFileName = `${deletedBankDetail.bankName}_details.pdf`;
+            const pdfRef = ref(storageRef, pdfFileName);
+            await deleteObject(pdfRef);
+            setLoading(false)
+
         } catch (error) {
-            setError("Unable to delete bank details, try agin")
+            console.log(error)
+            setLoading(false)
         }
     };
 
@@ -108,12 +101,12 @@ function AddBankInfoPage() {
                 }, 2000);
             })
             .catch((error) => {
-                setError("Unable to copy bank details to clipboard")
+                console.log(error)
             });
     };
 
     const generateBankDetailsPDF = async (bankInfo) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const pdf = new jsPDF();
 
             pdf.setTextColor(255, 255, 255);
@@ -130,6 +123,7 @@ function AddBankInfoPage() {
             const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
 
             pdf.setFillColor(255, 255, 255);
+            pdf.setFontSize(18);
 
             pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F');
 
@@ -149,140 +143,43 @@ function AddBankInfoPage() {
             const bankDetailsText = `Bank Name: ${bankInfo.bankName}\nAccount Holder: ${bankInfo.accountHolderName}\nAccount Number: ${bankInfo.accountNumber}`;
             pdf.text(bankDetailsText, textXPos, textYPos);
 
-            resolve(pdf.output('blob', { type: 'application/pdf' }));
+            const pdfBlob = pdf.output('blob', { type: 'application/pdf' });
+
+            try {
+                const pdfFileName = `${bankInfo.bankName}_details.pdf`;
+                const pdfRef = ref(storageRef, pdfFileName);
+
+                await uploadBytes(pdfRef, pdfBlob);
+
+                const downloadURL = await getDownloadURL(pdfRef);
+
+                resolve(downloadURL);
+            } catch (error) {
+                reject(error);
+            }
         });
     };
 
-    const savePDFDownloadURL = async (index, downloadURL) => {
-        const updatedBankDetails = [...bankDetails];
-        updatedBankDetails[index] = { ...updatedBankDetails[index], pdfDownloadURL: downloadURL };
-
+    const shareBankDetails = async (bankInfo) => {
+        setLoading(true)
         try {
-            const userDoc = doc(firestore, "users", auth.currentUser.uid);
-            await setDoc(userDoc, { bankDetails: updatedBankDetails }, { merge: true });
-            setBankDetails(updatedBankDetails);
-        } catch (error) {
-            console.error('Error updating PDF download URL:', error);
-        }
-    };
+            const downloadURL = await generateBankDetailsPDF(bankInfo);
 
-    const downloadPDF = async (index) => {
-        try {
-            const bankInfo = bankDetails[index];
-            const pdfBlob = await generateBankDetailsPDF(bankInfo);
-
-            const blobUrl = URL.createObjectURL(pdfBlob);
-
-            const anchor = document.createElement('a');
-
-            anchor.href = blobUrl;
-
-            anchor.download = `BankDetails_${index}.pdf`;
-
-            document.body.appendChild(anchor);
-
-            anchor.click();
-
-            document.body.removeChild(anchor);
-
-            setShareOptionVisibility(false);
-
-            await savePDFDownloadURL(index, blobUrl)
-        } catch (error) {
-            setShareError("Download failed!!")
-        }
-    };
-
-    const shareWhatsapp = (url) => {
-        const whatsappUrl = `whatsapp://send?text=${encodeURIComponent(url)}`;
-        try {
-            window.open(whatsappUrl);
-        } catch (error) {
-            setShareError("Error opening WhatsApp")
-        }
-    };
-
-    const shareTwitter = (url) => {
-        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`;
-        try {
-            window.open(twitterUrl);
-        } catch (error) {
-            setShareError("Error opening Twitter")
-        }
-    };
-
-    const shareTelegram = (url) => {
-        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}`;
-        try {
-            window.open(telegramUrl);
-        } catch (error) {
-            setShareError("Error opening Telegram")
-        }
-    };
-
-    const shareMail = (url) => {
-        const mailtoUrl = `mailto:?subject=Bank Details&body=${encodeURIComponent(url)}`;
-        try {
-            window.open(mailtoUrl);
-        } catch (error) {
-            setShareError("Error opening Email")
-        }
-    };
-
-    const shareMessage = async (url) => {
-        const messageShareUrl = `sms:?body=${encodeURIComponent(url)}`;
-
-        if (window.navigator.share) {
-            try {
-                const messageWindow = window.open(messageShareUrl, '_blank');
-
-                if (messageWindow) {
-                    setTimeout(() => {
-                        messageWindow.close();
-                    }, 3000);
-                    setShareError("Error opening Message App")
-                } else {
-                    await window.navigator.share({
-                        title: 'Share via Message',
-                        text: 'Check out this PDF',
-                        url: url,
-                    });
-                }
-            } catch (error) {
-                await window.navigator.share({
-                    title: 'Share via Message',
-                    text: 'Check out this PDF',
-                    url: url,
-                });
-            }
-        } else {
-            window.open(messageShareUrl);
-        }
-    };
-
-    const shareWindow = async (url) => {
-        if (navigator.share) {
-            try {
+            if (navigator.share) {
                 await navigator.share({
-                    title: 'Bank Details',
-                    text: 'Check out these bank details',
-                    url: url,
+                    title: 'Bank Detail PDF',
+                    text: `Download ${bankInfo.bankName} Bank Details PDF`,
+                    url: downloadURL,
                 });
-            } catch (error) {
-                console.error('Error sharing through Web Share API:', error);
+                setLoading(false)
+            } else {
+                console.log("Web Share API not supported");
+                setLoading(false)
             }
-        } else {
-            setShareError("Web Share API not supported")
+        } catch (error) {
+            console.error("Error sharing bank details:", error);
+            setLoading(false)
         }
-    };
-
-    const shareBankDetails = (index) => {
-        setShareOptionVisibility(true);
-        setShareIndex(index);
-    };
-
-    const handleRemove = () => {
-        setShareOptionVisibility(false);
     };
 
 
@@ -304,7 +201,7 @@ function AddBankInfoPage() {
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section bankInfo">
-                                <div>
+                                <div className="page-content">
                                     <h1>Bank Information</h1>
                                     <HomePageButton
                                         label={
@@ -314,12 +211,6 @@ function AddBankInfoPage() {
                                         }
                                         onClick={() => navigate("/getBankInfoForm-page")}
                                     />
-                                    <div className="error-message-container">
-                                        {error && <p className="error-message">
-                                            <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
-                                            {error}
-                                        </p>}
-                                    </div>
                                     <span className="bankDatails-card--container">
                                         {bankDetails.length > 0 && bankDetails.map((bankInfo, index) => (
                                             <div key={index} className="bankDatails-card">
@@ -338,7 +229,7 @@ function AddBankInfoPage() {
                                                             <p className="acnNumber">{bankInfo.accountNumber}</p>
                                                             <span>
                                                                 <img src={copiedIndex === index ? "./image/copied-tick.png" : "./image/copy-01.png"} alt="icon" onClick={() => copyBankDetails(index)} className="icon" />
-                                                                <img src="./image/share-01.png" alt="icon" onClick={() => shareBankDetails(index)} className="icon" />
+                                                                <img src="./image/share-01.png" alt="icon" onClick={() => shareBankDetails(bankInfo)} className="icon" />
                                                             </span>
                                                         </div>
                                                     </span>
@@ -348,51 +239,6 @@ function AddBankInfoPage() {
                                     </span>
                                 </div>
                             </div>
-                            {isShareOptionVisible && (
-                                <div className='shareBankDetail'>
-                                    {shareError && <p className="error-message">
-                                        <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
-                                        {shareError}</p>}
-                                    <div className='shareBankDetailOpt'>
-                                        <span className='removeShareOpt'>
-                                            <p>Share with</p>
-                                            <div onClick={handleRemove}>
-                                                <FontAwesomeIcon icon="fa-regular fa-circle-xmark" />
-                                            </div>
-                                        </span>
-                                        <span className="shareOptionImgContainer">
-                                            <ShareOptionImg
-                                                src="./image/download-icon.png"
-                                                onClick={() => downloadPDF(shareIndex)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/whatsapp.png"
-                                                onClick={() => shareWhatsapp(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/new-twitter.png"
-                                                onClick={() => shareTwitter(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/telegram.png"
-                                                onClick={() => shareTelegram(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/mail-validation-01.png"
-                                                onClick={() => shareMail(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/bubble-chat.png"
-                                                onClick={() => shareMessage(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                            <ShareOptionImg
-                                                src="./image/share-08.png"
-                                                onClick={() => shareWindow(bankDetails[shareIndex]?.pdfDownloadURL)}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
                         </section>
                     )}
                 </section>

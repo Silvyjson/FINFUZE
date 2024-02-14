@@ -35,6 +35,10 @@
   }
 }
 
+.rememberMe {
+  @include display-style();
+}
+
 .entryFormButton {
   margin-top: 20px;
 }
