@@ -34,7 +34,7 @@ function Footer() {
                 </form>
             </span>
             <div className="footer-container">
-                <img src="./image/Finfuze logo 1 2.png" alt="logo" className="footer-logo" />
+                <img src="./image/Finfuze logo 1 2.png" alt="logo" className="footer-logo1" />
                 <FooterLinks
                     title="Contact Information"
                     links={[
@@ -46,8 +46,6 @@ function Footer() {
                 <FooterLinks
                     title="Navigation Links"
                     links={[
-                        "About Us",
-                        "Contact Us",
                         "FAQ",
                         "Terms of Service",
                         "Privacy Policy"

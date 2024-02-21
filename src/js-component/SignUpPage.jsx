@@ -48,16 +48,6 @@ function SignUpComponent() {
         }
     };
 
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log("User is signed in");
-            } else {
-                console.log("User is signed out");
-            }
-        });
-    }, []);
-
     return (
         <>
             {loading ? (
@@ -66,7 +56,7 @@ function SignUpComponent() {
                 </div>
             ) : (
                 <section className="entryForm-section">
-                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" />
+                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" className="footer-logo" />
                     <div className="entryForm-container">
                         <h1>Welcome</h1>
                         <p>Create an account</p>

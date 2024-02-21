@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import HeaderButton from "../Other-component/Form";
 import Navigation, { Menubar } from "../Other-component/Navigation";
 
+const HeaderLinkList = (props) => {
+  const { list, clasS } = props;
+
+  const toggleGet = () => {
+    const navScroll = document.querySelector(clasS);
+
+    navScroll.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  return (
+    <li onClick={toggleGet}>{list}</li>
+  );
+}
+
 function Header() {
+  const navigate = useNavigate();
 
   function toggleList() {
 
@@ -16,6 +32,40 @@ function Header() {
       navElement.classList.toggle("open_nav");
     });
 
+  }
+
+  useEffect(() => {
+    const closeMenuOnBodyClick = (event) => {
+      const menuIcon = document.querySelector(`.headersection-menu-icon`);
+      const navElements = document.querySelectorAll(`.navElement`);
+
+      if (!menuIcon.contains(event.target) && !navElements[0].contains(event.target)) {
+        menuIcon.classList.remove("open");
+
+        navElements.forEach(navElement => {
+          navElement.classList.remove("open_nav");
+        });
+      }
+    };
+
+    document.body.addEventListener('click', closeMenuOnBodyClick);
+    window.addEventListener('scroll', closeMenuOnBodyClick);
+
+    return () => {
+      document.body.removeEventListener('click', closeMenuOnBodyClick);
+      window.removeEventListener('scroll', closeMenuOnBodyClick);
+    };
+  }, []);
+
+
+  const toggleNav = () => {
+    navigate("/signUp-page");
+  }
+
+  const toggleScroll = () => {
+    const AboutSection = document.querySelector(".aboutSection");
+
+    AboutSection.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (
@@ -34,8 +84,14 @@ function Header() {
             <li>Home</li>
             <li>Manage</li>
             <li>Solution</li>
-            <li>About</li>
-            <li>Contact</li>
+            <HeaderLinkList
+              list="About"
+              clasS=".finfuzeArticle-section"
+            />
+            <HeaderLinkList
+              list="Contact"
+              clasS=".footer_section"
+            />
           </ul>
 
           <ul className="navElement navlist">
@@ -56,8 +112,8 @@ function Header() {
             </p>
 
             <div className="button">
-              <HeaderButton label="Get started" className="h1button" />
-              <HeaderButton label="Learn more" className="h2button" />
+              <HeaderButton label="Get started" className="h1button" onClick={toggleNav} />
+              <HeaderButton label="Learn more" className="h2button" onClick={toggleScroll} />
             </div>
           </div>
 
