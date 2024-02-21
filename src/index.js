@@ -7,7 +7,7 @@ import LandingPage from './js-component/LandingPage';
 import LoginComponent from './js-component/LoginPage';
 import SignUpComponent from './js-component/SignUpPage';
 import HomePage from './js-component/Home-page/HomePage';
-import ResetPasswordComponent from './js-component/ResetPassword';
+import ResetPasswordComponent from './js-component/ResetPasswordPage';
 import ProfileSettings from './js-component/Home-page/ProfileSetting';
 import AddBankInfoPage from './js-component/Home-page/BankDetails';
 import GetBankInfoForm from './js-component/Bank-info/BankInfoForm';

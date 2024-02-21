@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomePageNav, { NotificationBell } from "../Other-component/HomePageNavi";
-import { HomePageButton, Input } from "../Other-component/Form";
+import { HomePageButton, Input } from "../Other-component/FormProps";
 import SelectBankName from "./SelectBankName";
 
 const firestore = getFirestore();

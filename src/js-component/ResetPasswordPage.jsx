@@ -3,7 +3,7 @@ import { auth } from "../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Input } from "./Other-component/Form";
+import { Button, Input } from "./Other-component/FormProps";
 import Navigation from "./Other-component/Navigation";
 
 function ResetPasswordComponent() {

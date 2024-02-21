@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Input } from "./Other-component/Form";
+import { Button, Input } from "./Other-component/FormProps";
 import Navigation from "./Other-component/Navigation";
 
 function SignUpComponent() {

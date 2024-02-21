@@ -5,7 +5,7 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomePageNav, { NotificationBell } from "../Other-component/HomePageNavi";
-import { HomePageButton } from "../Other-component/Form";
+import { HomePageButton } from "../Other-component/FormProps";
 import jsPDF from 'jspdf';
 
 const firestore = getFirestore();
