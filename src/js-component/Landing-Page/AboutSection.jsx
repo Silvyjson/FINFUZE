@@ -16,7 +16,7 @@ const CardContent = (props) => {
 
 function About() {
     return (
-        <section>
+        <section className="aboutSection">
 
             <CardContent
                 description={<>Make <span className="blue-bubble">seamless</span> transactions </>}

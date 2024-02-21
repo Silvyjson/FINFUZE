@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 const HeaderButton = (props) => {
-  const { label, className } = props;
+  const { label, className, onClick } = props;
 
   return (
-    <button className={`headerButton ${className}`} >{label}</button>
+    <button className={`headerButton ${className}`} onClick={onClick} >{label}</button>
   );
 };
 

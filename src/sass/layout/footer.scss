@@ -16,12 +16,27 @@
   text-align: left;
 }
 
+.footer-logo {
+  max-width: 171px;
+  max-height: 55px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.footer-logo1 {
+  max-width: 171px;
+}
+
 .footer-links {
   li {
     list-style-type: none;
     padding: 5px 0;
     cursor: pointer;
   }
+}
+
+.footer-links li:hover {
+  color: $primary-color;
 }
 
 .footer-copyright {
