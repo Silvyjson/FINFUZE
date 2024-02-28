@@ -1,5 +1,3 @@
-import React from "react";
-
 const IntroComponent = (props) => {
     const { title, body, src } = props;
 

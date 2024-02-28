@@ -1,0 +1,77 @@
+.financialTipProps {
+  max-width: 295px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  img {
+    cursor: pointer;
+    max-width: 295px;
+    min-width: 250px;
+    width: 100%;
+    height: 178px;
+    border-radius: 5px;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 2rem;
+    letter-spacing: -0.03em;
+  }
+  p {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 2rem;
+    letter-spacing: -0.03em;
+    color: $gray-text-color;
+  }
+}
+
+.financialTipsSection {
+  padding: 40px 0;
+}
+
+.financialTipsSection--header {
+  @include display-style();
+  justify-content: space-between;
+
+  picture {
+    @include display-style();
+    gap: 5px;
+    cursor: pointer;
+
+    p {
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 2rem;
+      letter-spacing: -0.03em;
+      color: $gray-text-color;
+    }
+  }
+}
+
+.financialTipsSection--header-h1 {
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 2rem;
+  letter-spacing: -0.03em;
+  color: $primary-color;
+}
+
+.financialTipsSection--content {
+  @include display-style();
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.financialCoursebutton {
+    cursor: pointer;
+    width: 20rem;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    gap: 10px;
+    color: $page-background-color;
+    background-color: $primary-color;
+}

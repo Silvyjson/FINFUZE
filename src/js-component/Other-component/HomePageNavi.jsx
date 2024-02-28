@@ -1,4 +1,3 @@
-import React from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menubar } from "./Navigation";
@@ -80,11 +79,12 @@ function HomePageNav() {
                     <HomePageNavItem
                         title="Financial literacy"
                         src="./image/book-04.png"
-                        selectedSrc="./image/book-04.png"
+                        selectedSrc="./image/book-04 1.png"
+                        nav="/finacialCourse-page"
                     />
                     <div className="homePageMenu_content" onClick={userSignOut}>
-                        <img src="./image/sign-out.png" alt="signout" />
-                        <h3>Sign Out</h3>
+                        <img src="./image/logout-03.png" alt="signout" />
+                        <h3 className="signOutH3">Sign Out</h3>
                     </div>
                 </span>
             </section>

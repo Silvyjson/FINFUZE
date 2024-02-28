@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Input } from "../Other-component/FormProps";
 
 const FooterLinks = (props) => {

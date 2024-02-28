@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const HeaderButton = (props) => {
   const { label, className, onClick } = props;
