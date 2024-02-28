@@ -137,7 +137,7 @@
 
   .upload-content {
     height: 80%;
-    
+
     img {
       width: 20%;
     }
@@ -298,12 +298,6 @@
     }
   }
 
-  .footer-container {
-    @include display-style();
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .newletter-section {
     p {
       width: 70%;
@@ -340,6 +334,10 @@
     }
   }
 
+  .footer-container {
+    padding: 0 20px;
+  }
+
   .quickLink {
     max-width: 443px;
     min-width: 230px;
@@ -373,17 +371,18 @@
   }
 }
 
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 350px) {
+  .footer-container {
+    @include display-style();
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+  }
+
   .bankDatails-card {
     max-width: 260px;
     width: 100%;
-  }
-
-  .entry-form {
-    .InputStle {
-      width: 80%;
-      padding: 0 20px;
-    }
   }
 
   .message,
