@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,7 @@ function GetBankInfoForm() {
             const formattedBankName = bankName.toLowerCase().replace(/ /g, '');
             return `./image/logos/${formattedBankName}Logo.png`;
         }
-        return './path/to/defaultLogo.png';
+        return './image/logos/defaultLogo.png';
     };
 
     const uploadUserBankDetails = async () => {
@@ -120,14 +120,14 @@ function GetBankInfoForm() {
                     <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
                 </div>
             ) : (
-                <section>
+                <>
                     {internetError ? (
                         <div className="loading-spinner internetError">
                             <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                             <h1>{internetError}</h1>
                         </div>
                     ) : (
-                        <section>
+                        <>
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section bankInfo BDForm">
@@ -188,9 +188,9 @@ function GetBankInfoForm() {
                                     </span>
                                 </span>
                             </div>
-                        </section>
+                        </>
                     )}
-                </section>
+                </>
             )}
         </>
     );

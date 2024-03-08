@@ -1,5 +1,3 @@
-import React from "react";
-
 const SelectBankName = (props) => {
   const { className, htmlFor, label, id, name, value, onChange } = props;
 

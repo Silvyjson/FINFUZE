@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -28,7 +28,7 @@ function EditBankInfoForm() {
             const formattedBankName = bankName.toLowerCase().replace(/ /g, '');
             return `./image/logos/${formattedBankName}Logo.png`;
         }
-        return './path/to/defaultLogo.png';
+        return './image/logos/defaultLogo.png';
     };
 
     const uploadUserBankDetails = async () => {
@@ -153,14 +153,14 @@ function EditBankInfoForm() {
                     <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
                 </div>
             ) : (
-                <section>
+                <>
                     {internetError ? (
                         <div className="loading-spinner internetError">
                             <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                             <h1>{internetError}</h1>
                         </div>
                     ) : (
-                        <section>
+                        <>
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section bankInfo BDForm">
@@ -217,9 +217,9 @@ function EditBankInfoForm() {
                                     </span>
                                 </span>
                             </div>
-                        </section>
+                        </>
                     )}
-                </section>
+                </>
             )}
         </>
     );

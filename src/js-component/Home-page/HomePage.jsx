@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAuth as getFirebaseAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
@@ -76,14 +76,14 @@ function HomePage() {
                     <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
                 </div>
             ) : (
-                <section>
+                <>
                     {internetError ? (
                         <div className="loading-spinner internetError">
                             <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                             <h1>{internetError}</h1>
                         </div>
                     ) : (
-                        <section>
+                        <>
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section">
@@ -112,7 +112,7 @@ function HomePage() {
                                             title="Explore Financial Tips"
                                             src="./image/book-04.png"
                                             explore="Explore"
-                                            nav=""
+                                            nav="/finacialCourse-page"
                                             className="tips"
                                         />
                                         <HomePageQuickNav
@@ -123,9 +123,9 @@ function HomePage() {
                                     </span>
                                 </div>
                             </div>
-                        </section>
+                        </>
                     )}
-                </section>
+                </>
             )}
         </>
     );

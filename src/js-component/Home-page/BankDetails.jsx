@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -60,7 +60,7 @@ function AddBankInfoPage() {
             const formattedBankName = bankName.toLowerCase().replace(/ /g, '');
             return `./image/logos/${formattedBankName}Logo.png`;
         }
-        return './path/to/defaultLogo.png';
+        return './image/logos/defaultLogo.png';
     };
 
     const deleteBankDetails = async (index) => {
@@ -110,35 +110,34 @@ function AddBankInfoPage() {
             const pdf = new jsPDF();
 
             pdf.setTextColor(255, 255, 255);
-            pdf.setFontSize(22);
+            pdf.setFontSize(20);
 
             const logoSrc = getBankLogo(bankInfo.bankName);
 
             const backgroundImage = './image/Visa Card 3 (Ocean Blue).png';
 
-            const imgWidth = 180;
-            const imgHeight = 120;
+            const imgWidth = 160;
+            const imgHeight = 100;
 
             const xPos = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
             const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
 
             pdf.setFillColor(255, 255, 255);
-            pdf.setFontSize(18);
 
             pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F');
 
             pdf.addImage(backgroundImage, 'PNG', xPos, yPos, imgWidth, imgHeight);
 
-            const logoWidth = 50;
-            const logoHeight = 30;
+            const logoWidth = 40;
+            const logoHeight = 20;
 
             const logoXPos = xPos + 15;
-            const logoYPos = yPos + 5;
+            const logoYPos = yPos + 10;
 
             pdf.addImage(logoSrc, 'PNG', logoXPos, logoYPos, logoWidth, logoHeight);
 
             const textXPos = xPos + 15;
-            const textYPos = yPos + 80;
+            const textYPos = yPos + 60;
 
             const bankDetailsText = `Bank Name: ${bankInfo.bankName}\nAccount Holder: ${bankInfo.accountHolderName}\nAccount Number: ${bankInfo.accountNumber}`;
             pdf.text(bankDetailsText, textXPos, textYPos);
@@ -190,25 +189,21 @@ function AddBankInfoPage() {
                     <FontAwesomeIcon icon="fa-solid fa-spinner" spin size="3x" />
                 </div>
             ) : (
-                <section>
+                <>
                     {internetError ? (
                         <div className="loading-spinner internetError">
                             <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                             <h1>{internetError}</h1>
                         </div>
                     ) : (
-                        <section>
+                        <>
                             <HomePageNav />
                             <NotificationBell />
                             <div className="main_section bankInfo">
                                 <div className="page-content">
                                     <h1>Bank Information</h1>
                                     <HomePageButton
-                                        label={
-                                            <div>
-                                                Add <img src="./image/Vector.png" alt="Alt Text" />
-                                            </div>
-                                        }
+                                        label={ <> Add <img src="./image/Vector.png" alt="Alt Text" /> </>}
                                         onClick={() => navigate("/getBankInfoForm-page")}
                                     />
                                     <span className="bankDatails-card--container">
@@ -239,9 +234,9 @@ function AddBankInfoPage() {
                                     </span>
                                 </div>
                             </div>
-                        </section>
+                        </>
                     )}
-                </section>
+                </>
             )}
         </>
     );

@@ -11,12 +11,13 @@ import ResetPasswordComponent from './js-component/ResetPasswordPage';
 import ProfileSettings from './js-component/Home-page/ProfileSetting';
 import AddBankInfoPage from './js-component/Home-page/BankDetails';
 import GetBankInfoForm from './js-component/Bank-info/BankInfoForm';
+import EditBankInfoForm from './js-component/Bank-info/EditBankInfoForm';
+import FinancialCourse from './js-component/Home-page/FinancialCoursePage';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import EditBankInfoForm from './js-component/Bank-info/EditBankInfoForm';
 
 library.add(fab, fas, far);
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
   { path: "/signUp-page", element: <SignUpComponent /> },
   { path: "/home-page", element: <HomePage /> },
   { path: "/profile-settings-page", element: <ProfileSettings/> },
+  { path: "/finacialCourse-page", element: <FinancialCourse /> },
   { path: "/addBankInfoPage-page", element: <AddBankInfoPage /> },
   { path: "/getBankInfoForm-page", element: <GetBankInfoForm /> },
   { path: "/editBankInfoForm-page", element: <EditBankInfoForm /> },
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
 );
 
 reportWebVitals();
