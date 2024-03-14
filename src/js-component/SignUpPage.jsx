@@ -3,9 +3,12 @@ import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input } from "./Other-component/FormProps";
+import { useNavigate } from 'react-router-dom';
 import Navigation from "./Other-component/Navigation";
 
 function SignUpComponent() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -56,7 +59,7 @@ function SignUpComponent() {
                 </div>
             ) : (
                 <section className="entryForm-section">
-                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" className="footer-logo" />
+                    <img src="./image/Finfuze logo 1 2.png" alt="finfuze logo" className="footer-logo" onClick={()=> {navigate("/")}}/>
                     <div className="entryForm-container">
                         <h1>Welcome</h1>
                         <p>Create an account</p>

@@ -17,11 +17,11 @@ export const HomePageQuickNav = (props) => {
     return (
         <section onClick={toggleNavigate} className={`quickLink ${className}`}>
             <span>
-                <div className="image-icon"><img src={src} alt="icon" /></div>
+                <div className="image-icon"><img src={src} alt="icons" /></div>
                 <h1>{title}</h1>
                 <div className="explore">
                     <p>{explore}</p>
-                    {explore && <img src="./image/arrow-right-01.png" />}
+                    {explore && <img src="./image/arrow-right-01.png" alt="icons" />}
                 </div>
             </span>
         </section>
@@ -57,7 +57,7 @@ function HomePage() {
         };
 
         auth.onAuthStateChanged(fetchData);
-    }, []);
+    }, [auth, firestore]);
 
 
     useEffect(() => {

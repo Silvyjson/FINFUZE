@@ -94,7 +94,7 @@ function LoginComponent() {
                 </div>
             ) : (
                 <section className="entryForm-section">
-                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" className="footer-logo" />
+                    <img src="./image/Finfuze logo 1 2.png" alt="finfuze logo" className="footer-logo" onClick={()=> {navigate("/")}}/>
                     <div className="entryForm-container">
                         <h1>Login</h1>
                         <p>Hi, welcome back</p>

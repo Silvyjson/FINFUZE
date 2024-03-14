@@ -13,8 +13,8 @@
 
 .InputStle {
   position: relative;
-  width: 380px;
-  height: 45px;
+  width: 400px;
+  height: 50px;
   padding: 0 20px;
   border-radius: 10px;
   border: 1px solid #d7d7d7;
@@ -24,13 +24,12 @@
   font-size: 2rem;
   font-weight: 500;
   letter-spacing: -0.03em;
-  text-align: left;
   color: #d7d7d7;
 }
 
 .buttonStyle {
   cursor: pointer;
-  width: 420px;
+  width: 400px;
   height: 50px;
   border-radius: 10px;
   background-color: $primary-color;
@@ -70,10 +69,10 @@
 
   div {
     position: relative;
+    width: 100%;
   }
 
   input {
-    width: 320px;
     padding: 0 45px;
   }
 }
@@ -86,6 +85,6 @@
 
 .newsletterStyle::placeholder {
   position: absolute;
-  top: 15px;
+  top: 18px;
   left: 45px;
 }

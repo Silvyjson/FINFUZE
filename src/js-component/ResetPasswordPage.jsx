@@ -4,7 +4,6 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input } from "./Other-component/FormProps";
-import Navigation from "./Other-component/Navigation";
 
 function ResetPasswordComponent() {
     const navigate = useNavigate();
@@ -41,7 +40,7 @@ function ResetPasswordComponent() {
                 </div>
             ) : (
                 <section className="entryForm-section">
-                    <Navigation nav="/" src="./image/Finfuze logo 1 2.png" className="footer-logo" />
+                    <img src="./image/Finfuze logo 1 2.png" alt="finfuze logo" className="footer-logo" onClick={()=> {navigate("/")}} />
                     <div className="entryForm-container">
                         <h1>Forgot password?</h1>
                         <div className="error-message-container">

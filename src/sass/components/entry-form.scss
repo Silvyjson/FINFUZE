@@ -20,22 +20,18 @@
   }
 
   p {
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 500;
     letter-spacing: 0em;
   }
 
   span {
     display: inline-flex;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 500;
     letter-spacing: 0em;
     margin-top: 20px;
   }
-}
-
-.rememberMe {
-  @include display-style();
 }
 
 .entryFormButton {
@@ -73,14 +69,15 @@
 .formAdditional-info {
   @include display-style();
   justify-content: space-between;
+}
+
+.rememberMe {
+  @include display-style();
 
   input {
     border: 1px solid #d7d7d7;
     cursor: pointer;
-  }
-
-  span {
-    cursor: pointer;
+    margin: 0;
   }
 }
 

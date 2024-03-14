@@ -196,7 +196,7 @@ function ProfileSettings() {
         };
 
         fetchData();
-    }, []);
+    }, [auth, firestore]);
 
     return (
         <>
@@ -220,7 +220,7 @@ function ProfileSettings() {
                                     <span className="page-content">
                                         <span className="uploadImage-section">
                                             <span className="uploadImage">
-                                                <img src="./image/file upload states.png" alt="Upload your picture" />
+                                                <img src="./image/file upload states.png" alt="Upload icon" />
                                                 <div>
                                                     <h2>Upload your picture</h2>
                                                     <span>file format  Max. 5MB </span>
@@ -314,7 +314,7 @@ function ProfileSettings() {
                                             <h1>Browse Files to upload</h1>
                                         </span>
                                         <span className="uploadImgSection-content remove-content">
-                                            <img src="./image/bxs_file-image.png" alt="image" className="img-icon" />
+                                            <img src="./image/bxs_file-image.png" alt="upload icon" className="img-icon" />
                                             <span className="delete-img-icon">
                                                 <span>
                                                     {selectedFileName ?

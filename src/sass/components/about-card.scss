@@ -3,9 +3,9 @@
   align-items: center;
   justify-content: center;
   width: auto;
-  max-width: 110px;
+  max-width: 150px;
   height: 30px;
-  padding: 0 5px;
+  padding: 0 10px;
   border-radius: 100px;
   background-color: #5fb8ff;
 }
@@ -25,11 +25,10 @@
   article {
     width: 100%;
     max-width: 30%;
-    font-size: 2.2rem;
+    font-size: 2.7rem;
     font-weight: 500;
-    line-height: 2.8rem;
+    line-height: 3rem;
     letter-spacing: -0.02em;
-    text-align: left;
   }
 }
 
@@ -54,7 +53,7 @@
 
   p {
     width: 60%;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 300;
     line-height: 2.4rem;
     letter-spacing: -0.02em;
